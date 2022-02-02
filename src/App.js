@@ -18,7 +18,7 @@ import Wallet from './screens/wallet';
 import Contacts from './screens/contacts';
 import Register from './screens/register';
 import Footer from './components/footer';
-import './dist/css/bootstrap.css';
+import './dist/css/bootstrap.min.css';
 import './blog.css';
 import 'antd/dist/antd.css';
 import "./App.css";
@@ -27,20 +27,22 @@ import Settings from './screens/userSettings';
 import 'antd/dist/antd.css'; 
 import Wallets from './screens/wallets';
 import ForgotPassword from './screens/forgot_password';
-import SubCategory from './screens/sub_category';
 import SearchResult from './screens/search_result';
+import 'moment/locale/ru';
+// import SubCategory from './screens/sub_category';
+// import SubSubCategory from './screens/sub_sub_category';
 
 const App = ({match}) => {
     return(
       <div className="container-fluid">
         <div className="row">
-            <div className="col-md-1 px-0 d-none d-md-block text-white text-center" 
+            <div className="col-lg-2 px-0 d-none d-lg-block text-white text-center" 
               style={{backgroundSize : "auto", backgroundPosition: "right top", 
                 backgroundImage: "url('https://www.house.kg/build/images/banners/branding-left-imarat-20-may.e320d43f.png')",
                 backgroundRepeat: "no-repeat"}}>
             </div>
-            <div className="col-md-10 px-0" style={{ backgroundColor: '#fff' }}>
-            <div className="col-md-12 bg-success px-0 text-white text-center">
+            <div className="col-lg-8 px-0" style={{ backgroundColor: '#fff' }}>
+            <div className="col-lg-12 bg-success px-0 text-white text-center">
                 <img src={top} width="100%"/>
             </div>
             <BrowserRouter>
@@ -54,7 +56,8 @@ const App = ({match}) => {
                 <Route path="/register" component={Register}/>
                 <Route path="/profile"  component={Profile}/>
                 <Route path="/category/:id" component={Category}/>
-                {/* <Route path="/category/:id/sub_category/:id" component={SubCategory}/> */}
+                {/* <Route path="/sub_category/:id" component={SubCategory}/>
+                <Route path="/sub_sub_category/:id" component={SubSubCategory}/> */}
                 <Route path="/about_us" component={About}/>
                 <Route path="/contacts" component={Contacts}/>
                 <Route path="/login" component={Login}/>
@@ -64,12 +67,12 @@ const App = ({match}) => {
                 <Route path="/wallet" component={Wallet}/>
                 <Route path="/articles" component={Articles}/>
                 <Route path="/article" component={Article}/>
-                <Route path="/search_result" component={SearchResult}/>
+                <Route path="/search_result/:search" component={SearchResult}/>
+                {/* <Route path="/search_result/:search/products/:id" component={Ad}/> */}
               </Switch>
-            </BrowserRouter>
-            
+            </BrowserRouter>     
             </div>
-            <div className="col-md-1 px-0 d-none d-md-block text-white text-center" 
+            <div className="col-lg-2 px-0 d-none d-lg-block text-white text-center" 
               style={{
                 backgroundSize : "auto", 
                 backgroundImage: "url('https://www.house.kg/build/images/banners/branding-left-imarat-20-may.e320d43f.png')",

@@ -66,9 +66,9 @@ export const deleteAd = async (id) =>{
 
     return null;
 };
-export const userSettings = async (params,userid , onSuccess = null, onError = null) => {
+export const userSettings = async (params, onSuccess = null, onError = null) => {
     console.log('params', params);
-    await ApiClient.patch('/users/'+userid, params).then(response => {
+    await ApiClient.patch('/user', params).then(response => {
         if (response.status == 200 || response.status == 201) {
             if (onSuccess != null) onSuccess(response.data.data);
         }

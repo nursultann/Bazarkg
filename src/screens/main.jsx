@@ -57,26 +57,26 @@ const Main = () => {
     <div>
       <Navbar />
       <SearchBar />
-      <main role="main" className="container-fluid">
+      <main role="main" className="container-fluid mb-5">
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-lg-12">
             <label className="" style={{fontSize:20}}>Новые Объявления</label>
             <div className="row mt-6 mb-6">
               {products === null || products === undefined || products.length === 0 ?
-                <Grid container spacing={2} className="pl-3 pt-4 pb-4">
-                  <Grid item xs={4}>
+                <Grid container spacing={2} className="pl-4 pl-lg-3 pt-4 pb-4">
+                  <Grid item lg={4} xs={11}>
                     <Skeleton variant="rectangular" width={'100%'} height={100} />
                     <Skeleton variant="text" />
                     <Skeleton variant="text" />
                     <Skeleton variant="text" />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item lg={4} xs={11}>
                     <Skeleton variant="rectangular" width={'100%'} height={100} />
                     <Skeleton variant="text" />
                     <Skeleton variant="text" />
                     <Skeleton variant="text" />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item lg={4} xs={11}>
                     <Skeleton variant="rectangular" width={'100%'} height={100} />
                     <Skeleton variant="text" />
                     <Skeleton variant="text" />
@@ -85,7 +85,7 @@ const Main = () => {
                 </Grid>
               : products.map((product) => {
                   return (
-                    <div className="col-xs-12 col-sm-6 col-xl-4 mt-3">
+                    <div className="col-6 col-sm-6 col-xl-3 mt-3">
                       <ProductItem product={product} />
                     </div>            
                   )
@@ -100,18 +100,17 @@ const Main = () => {
                   Показать еще
               </Button>
             </center> 
-            <hr />
-            <h5 className="text-muted">Бизнес профили</h5>
-            <div className="col-md-12 pb-5 pt-1">
+            {/* <hr />
+            <h5 className="text-muted">Бизнес профили</h5> */}
+            {/* <div className="col-md-12 pb-5 pt-1">
             <Bussiness_Slider />
-            </div>  
+            </div>   */}
           </div>
           <BackTop>
             <Tooltip title="Наверх">
               <Button shape="circle" size="large" type="primary" icon={<UpOutlined />} />
             </Tooltip>
           </BackTop>
-          <div className="col-md-4"></div>
         </div>
       </main>
       <Footer/>

@@ -35,8 +35,8 @@ const Sign  = () => {
     return(
         <div>
             <Navbar/>
-                <div className="col-md-12 d-flex justify-content-center">
-                    <div className="col-md-5 py-4 shadow my-3 bg-white text-center"> 
+                <div className="col-xl-12 d-flex justify-content-center">
+                    <div className="col-xl-5 py-4 shadow my-3 bg-white text-center"> 
                     <label className="py-2" style={{fontSize:20}}>Вход</label>
                     <br/>
                         <Form
@@ -72,14 +72,14 @@ const Sign  = () => {
                             <Input.Password onChange={(e)=> {setPassword(e.target.value)}} placeholder="Пароль" />
                         </Form.Item>
                         <Form.Item wrapperCol={{offset:0}}>
-                            <Button className="col-md-7" htmlType="submit" onClick={signIn}>
+                            <Button style={{backgroundColor:"#4dab04",color:"#fff"}} className="col-md-7" htmlType="submit" onClick={signIn}>
                             Войти
                             </Button>
                         </Form.Item>
                         </Form>
                         <label>Вы не зарегистрированы?</label>
-                        <a style={{color:"#000fa6"}} className="ml-2" href="/register">Зарегистроваться</a><br/>
-                        <a style={{color:"#000fa6"}} className="ml-2" href="/forgot_password">Забыли пароль</a>                        
+                        <a style={{color:"#4dab04"}} className="ml-2" href="/register">Зарегистроваться</a><br/>
+                        <a style={{color:"#4dab04"}} className="ml-2" href="/forgot_password">Забыли пароль</a>                        
                     </div>
                 </div>   
             <Footer/>

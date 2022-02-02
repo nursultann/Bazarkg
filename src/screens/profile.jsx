@@ -83,10 +83,10 @@ const Profile = () => {
                 :
             <div>
             <Navbar/>
-            <div className="col-md-12">
+            <div className="col-xl-12">
             <div className="row px-3 mb-5">
-                <div className="col-md-4 bg-white rounded">
-                      <div className="col-md-12 py-2">
+                <div className="col-xl-4 bg-white rounded">
+                      <div className="col-xl-12 py-2">
                             <div className="row">
                                 <div className="col-12">
                                 <Avatar size={64} icon={<UserOutlined />}/>
@@ -95,7 +95,7 @@ const Profile = () => {
                             </div> 
                       </div>
                       <hr/>
-                      <div className="col-md-12">
+                      <div className="col-xl-12">
                           <label>+{user.phone}</label>
                           <br/>
                           <Link to="/wallets">Пополнить</Link>: {user.balance} сом
@@ -106,14 +106,14 @@ const Profile = () => {
                       </div>
                       <hr/>
                 </div>
-                <div className="col-md-8 mt-3 mt-md-0">
+                <div className="col-xl-8 mt-3 mt-md-0">
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Все объявления" key="1">
                             <div className="row">
                                 {products.map((product)=>{
                                     return(
                                         <>
-                                        <div className="col-xs-12 col-sm-6 col-xl-4 mt-3">
+                                        <div className="col-xs-12 col-sm-6 col-xl-6 mt-3">
                                         <ProductItem product={product}/>
                                         </div>
                                         </>
@@ -126,7 +126,7 @@ const Profile = () => {
                             {products.map((product)=>{
                                     return(
                                         <>
-                                        <div className="col-xs-12 col-sm-6 col-xl-4 mt-3">
+                                        <div className="col-xs-12 col-sm-6 col-xl-6 mt-3">
                                         <ProductItem product={product}/>
                                         </div>
                                         </>
