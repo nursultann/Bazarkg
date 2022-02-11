@@ -99,12 +99,7 @@ const Main = () => {
                 }}>
                   Показать еще
               </Button>
-            </center> 
-            {/* <hr />
-            <h5 className="text-muted">Бизнес профили</h5> */}
-            {/* <div className="col-md-12 pb-5 pt-1">
-            <Bussiness_Slider />
-            </div>   */}
+            </center>
           </div>
           <BackTop>
             <Tooltip title="Наверх">
