@@ -80,6 +80,7 @@ const saveChanges = async ()=>{
         message.loading({ content: 'Загрузка...', key });
         const result = await passwordChange(params, async function (data) {
             console.log(data);
+            // localStorage.setItem('token', params['api_token']); 
             const loginResult = await login(countryСode + phoneNumber, password, function (user) {
                 localStorage.setItem('token', user.api_token);
                 window.location.href = '/profile';

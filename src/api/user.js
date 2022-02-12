@@ -1,8 +1,9 @@
 import ApiClient from "./ApiClient";
 
-export const login = async (code,phone, password, onSuccess, onError) => {
+export const login = async (phone, password, onSuccess, onError) => {
     try {
-        const response = await ApiClient.post('/login', {'phone': code+phone, 'password': password});
+        const params = {'phone': phone, 'password': password};
+        const response = await ApiClient.post('/login', params);
         if (response.status == 200 || response.status == 201) {
             if (onSuccess != null) onSuccess(response.data.data);
         }

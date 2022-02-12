@@ -12,7 +12,8 @@ const Sign  = () => {
     const [countrycode,setCountryCode] = useState();
     const signIn = async ()=>{
         if (password === "" || phoneNumber.length < 9) return;
-        login(countrycode,phoneNumber, password, onLoginSuccess, onLoginError);
+        console.log('phone', countrycode + phoneNumber);
+        login(countrycode + phoneNumber, password, onLoginSuccess, onLoginError);
     }
 
     const onLoginSuccess = (data) => {
