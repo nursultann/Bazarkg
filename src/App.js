@@ -29,6 +29,7 @@ import Wallets from './screens/wallets';
 import ForgotPassword from './screens/forgot_password';
 import SearchResult from './screens/search_result';
 import 'moment/locale/ru';
+import Favorites from './screens/favorites';
 // import SubCategory from './screens/sub_category';
 // import SubSubCategory from './screens/sub_sub_category';
 
@@ -55,6 +56,7 @@ const App = ({match}) => {
                 <Route path="/products/create" component={CreateAd} />
                 <Route path="/register" component={Register}/>
                 <Route path="/profile"  component={Profile}/>
+                <Route path="/favorites" component={Favorites}/>
                 <Route path="/category/:id" component={Category}/>
                 {/* <Route path="/sub_category/:id" component={SubCategory}/>
                 <Route path="/sub_sub_category/:id" component={SubSubCategory}/> */}

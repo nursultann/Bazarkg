@@ -12,18 +12,18 @@ import { UserOutlined } from '@ant-design/icons';
 import { Button } from "@mui/material";
 import { setProducts } from "../redux/actions/product_actions";
 import * as api from "../api";
-import ProductItem from "../components/product/user_product_item";
+import ProductItem from "../components/product/product_item";
 import { Tabs } from 'antd';
-
+const key = 'updatable';
 const { TabPane } = Tabs;
-const Profile = () => {
+const Favorites = () => {
     console.log(localStorage.getItem('token'));
     if (!localStorage.getItem('token')) {
         window.location.href = '/';
     }
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
-    const {products} = useSelector((state) => state.product);
+    const [products,setProduct] = useState();
     const limit = 20;
     const [offset, setOffset] = useState(0);
     const fetchUserDetails = async () => { 
@@ -33,9 +33,10 @@ const Profile = () => {
         }
     };
     const UserProducts = async () =>{
-        let _products = await api.fetchUserProducts({'sub': true});
+        let _products = await api.fetchUserFavorites({'sub': true});
         if(_products!=null){
             dispatch(setProducts(_products));
+            setProduct(_products);
             setOffset(offset + limit);
         }
     };
@@ -96,20 +97,24 @@ const Profile = () => {
                       </div>
                       <hr/>
                       <div className="col-xl-12">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-warning">+{user.phone}</li>
-                                <li class="list-group-item list-group-item-warning"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
-                                <li class="list-group-item list-group-item-warning"><Link to="/profile">Мои объявления</Link></li>
-                                <li class="list-group-item list-group-item-warning"><Link to="/favorites">Избранные</Link></li>
-                                <li class="list-group-item list-group-item-warning"><Link to="/settings">Настройки</Link></li>
-                            </ul>
+                        <ul class="list-group">
+                            <li class="list-group-item">+{user.phone}</li>
+                            <li class="list-group-item"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
+                            <li class="list-group-item"><Link to="/profile">Мои объявления</Link></li>
+                            <li class="list-group-item"><Link to="/favorites">Избранные</Link></li>
+                            <li class="list-group-item"><Link to="/settings">Настройки</Link></li>
+                        </ul>
                       </div>
                       <hr/>
                 </div>
                 <div className="col-xl-8 mt-3 mt-md-0">
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="Все объявления" key="1">
+                            <TabPane tab="Избранное" key="1">
                             <div className="row">
+                                {
+                                <>
+                                {products?.length>0 ?
+                                <>
                                 {products.map((product)=>{
                                     return(
                                         <>
@@ -119,26 +124,13 @@ const Profile = () => {
                                         </>
                                     );
                                 })}
+                                </>
+                                :<></>}
+                                </>
+                                }
                                 </div>
-                            </TabPane>
-                            <TabPane tab="Активные" key="2">
-                            <div className="row">
-                            {products.map((product)=>{
-                                    return(
-                                        <>
-                                        <div className="col-xs-12 col-sm-6 col-xl-6 mt-3">
-                                        <ProductItem product={product}/>
-                                        </div>
-                                        </>
-                                    );
-                                })}
-                                </div>
-                            </TabPane>
-                            <TabPane tab="Неактивные" key="3">
-                            Content of Tab Pane 3
                             </TabPane>
                         </Tabs>
-
                 </div>
             </div>
             </div>
@@ -146,4 +138,4 @@ const Profile = () => {
             </div>
         );
 }
-export default Profile;
+export default Favorites;

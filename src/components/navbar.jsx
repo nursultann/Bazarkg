@@ -44,12 +44,19 @@ const Navbar = () => {
             break;
           case 'logout':
             logOut();
+            break;
+          case 'favorites':
+            navigateTo('/favorites');
             break;  
           default:
         }
       }}>
         <Menu.Item key="settings">
           Настройки
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="favorites">
+          Избранные
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout">

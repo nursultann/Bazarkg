@@ -2,53 +2,91 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../api";
+import { fetchProduct, userDetails} from "../api";
+import { addToFavorites, postComment, removeFromFavorites} from "../api/product";
 import { setProductDetails } from "../redux/actions/product_actions";
 import Carousel from 'react-gallery-carousel';
 import { FacebookShareButton, WhatsappShareButton,TelegramShareButton } from "react-share";
 import { FacebookIcon,WhatsappIcon, TelegramIcon } from "react-share";
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, message } from 'antd';
 import moment from 'moment';
+const key = 'updatable';
 const { TextArea } = Input;
 const Ad = ({match}) => {
     const dispatch = useDispatch();
     const {productDetails} = useSelector((state) => state.product);
+    const [userId,setUserId] = useState();
+    const [favorite,setFavorite] = useState();
     // const {shareUrl,setUrl} = useState();
     // setUrl();
     const fetchProductDetails = async () => {
         const productDetails = await fetchProduct(match.params.id, {
-            'with': 'category;customAttributeValues.customAttribute;region;city;user'
+            'with': 'category;customAttributeValues.customAttribute;region;city;user;comments'
         });
-        if (productDetails != null) {
+         if (productDetails != null) {
             dispatch(setProductDetails(productDetails));
+            setFavorite(productDetails.is_favorite);
         }
     };
     const token = localStorage.getItem('token');
     const [submitting,setSubmitting]=useState(false);
     const [value,setValue]=useState('');
-    const onSubmit = ()=>{
+    const onSubmit = async ()=>{
         if (!value) {
             return;
         }
+        const user = await userDetails();
+        if(user != null){
+            setUserId(user.id);
+        }
+        const params = {
+            'text' :value,
+            'advertisement_id':productDetails.id,
+            'user_id':userId
+        }
         setSubmitting(true);
-
+        const post = await postComment(params);
         setTimeout(() => {
             alert("added"+value);
             setSubmitting(false);
             setValue('');
           }, 1000);
     }
-    const CommentList = (productDetails) => (
-        <List
-          dataSource={productDetails.comments}
-          header={`${productDetails.comments.length} ${productDetails.comments.length > 1 ? 'Комментариев' : 'Комментариев'}`}
-          itemLayout="horizontal"
-          renderItem={props => <Comment {...props} />}
-        />
-      );
+    const CommentList = (comments)=>{
+        console.log(comments.comments[1].text);
+        return( 
+        <>     
+        {comments.comments.map((comment)=>{
+                <Comment
+                    actions={[<span key="comment-nested-reply-to">Reply to</span>]}
+                    author={<a>Han Solo</a>}
+                    avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+                    content={
+                    <p>
+                        {comment.text}
+                    </p>
+                    }
+                >
+                    
+                </Comment>
+        })}        
+        </>
+    );
+    }        
 
+    const addFav = async () =>{
+        const addToFav = await addToFavorites(productDetails.id);
+        message.success({ content: 'Добавлено в избранное!', key, duration: 2 });
+        setFavorite(true);
+    }
+    const removeFav = async ()=>{
+        const addToFav = await removeFromFavorites(productDetails.id);
+        message.error({ content: 'Удалено из избранного!', key, duration: 2 });
+        setFavorite(false);
+    }
     useEffect(() => {
         fetchProductDetails();
+
     }, []);
     if(productDetails!=null){
         var time = moment(productDetails.created_at, 'YYYYMMDD, h:mm:ss a');
@@ -111,10 +149,20 @@ const Ad = ({match}) => {
                                                 </div>
                                             </div>    
                                         </div>
+                                        {token ?
+                                        <>  
                                         <div className="col-xl-12 mt-xl-2">
                                         <hr className="d-block d-xl-none" /> 
-                                        <button class="btn btn-outline-secondary col-xl-12"><i class="far fa-heart"></i> Избранное</button>    
+                                         
+                                        {!favorite ?
+                                        <button class="btn btn-outline-secondary col-xl-12" onClick={addFav}><i class="far fa-heart"></i>Добавить в избранное</button>    
+                                        :<button class="btn col-xl-12 text-white" style={{backgroundColor:"#4dab04"}} onClick={removeFav}><i class="far fa-heart"></i>Удалить из избранного</button>
+                                        }
+                                        
                                         </div>
+                                        </>
+                                        :<></>
+                                        }
                                         <div className="col-xl-12 mt-xl-2">
                                         <hr className="d-block d-xl-none" /> 
                                         <button class="btn btn-outline-danger col-xl-12"><i class="fas fa-exclamation-triangle"></i> Пожаловаться</button>    

@@ -25,7 +25,7 @@ const Category = ({match})=> {
         if (products != null) {
             setCategory(category);
             setProducts(products);
-            dispatch(products);
+            // dispatch(setPr);
             setOffset(offset + limit);
         }
         setIsLoading(false);

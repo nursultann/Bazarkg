@@ -15,6 +15,34 @@ const SubCategories = ({category, onSubmit}) => {
     return(
       <>
         {category?.children?.length ?
+          <>
+          <div className="col-md-12 mt-3">
+          <label className="mb-3" style={{fontSize:18}}>Поиск</label>
+            <Form
+              form={form}
+              name="advanced_search"
+              className="ant-advanced-search-form"
+              onFinish={onFinish}
+            >
+              <div className="row">
+                {category?.custom_attribute != null ?  
+                  category.custom_attribute.map((item) => (
+                    <div className="col-md-4">  
+                      <Form.Item
+                        key={item.name}
+                        label={item.title}
+                        name={item.name}
+                        rules={[{required: item.is_required, message: item.placeholder}]}
+                      >
+                        {CustomAttributeField(item)}
+                      </Form.Item>
+                    </div>
+                  ))
+                : <>No attributes</>}
+              </div>
+              <Button onClick={onChange}>Send</Button>
+            </Form>
+          </div>
           <div className="col-md-12 py-2 bg-light">
             <label>По категориям</label>
             <div className="row">
@@ -27,34 +55,9 @@ const SubCategories = ({category, onSubmit}) => {
               )}
             </div>    
           </div>
+         </> 
         :
-          <div className="col-md-12 mt-3">
-            <label className="mb-3" style={{fontSize:18}}>Поиск</label>
-              <Form
-                form={form}
-                name="advanced_search"
-                className="ant-advanced-search-form"
-                onFinish={onFinish}
-              >
-                <div className="row">
-                  {category?.custom_attribute != null ?  
-                    category.custom_attribute.map((item) => (
-                      <div className="col-md-4">  
-                        <Form.Item
-                          key={item.name}
-                          label={item.title}
-                          name={item.name}
-                          rules={[{required: item.is_required, message: item.placeholder}]}
-                        >
-                          {CustomAttributeField(item)}
-                        </Form.Item>
-                      </div>
-                    ))
-                  : <>No attributes</>}
-                </div>
-                <Button onClick={onChange}>Send</Button>
-              </Form>
-            </div>
+          <></>
         } 
       </>
     );

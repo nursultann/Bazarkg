@@ -61,11 +61,9 @@ const ProductItem = ({product}) => {
                     <i class="far fa-clock"></i> {update}
                     </label>
                     <br/>
-                    <Button onClick={() => navigateToProductDetailsPage(product)}>Посмотреть</Button>
-                    <br/>
-                    <Button className="mt-2" href={"/products/"+product.id+"/edit"}>Редактировать</Button>
-                    <br/>
-                    <Button className="mt-2" onClick={removeAd}>Удалить</Button>
+                    <a style={{fontSize:12}} className="badge badge-success" onClick={() => navigateToProductDetailsPage(product)}>Посмотреть</a>
+                    <a style={{fontSize:12}} className="badge badge-warning ml-1 mt-2" href={"/products/"+product.id+"/edit"}>Редактировать</a>
+                    <a style={{fontSize:12}} className="badge badge-danger ml-1 mt-2" onClick={removeAd}>Удалить</a>
                 </div>
             </div>
     );

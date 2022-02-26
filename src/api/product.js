@@ -86,6 +86,25 @@ export const fetchUserProducts = async (params = { limit: 20, offset: 0 }) => {
 
     return null;
 };
+export const fetchUserFavorites = async (params = { limit: 20, offset: 0 }) => {
+    try {
+        if (!params.hasOwnProperty('sub')) {
+            if (!params.hasOwnProperty('offset')) params['offset'] = 0;
+            if (!params.hasOwnProperty('limit')) params['limit'] = 20;
+        }
+        params['orderBy'] = 'id';
+        params['sortedBy'] = 'desc';
+        
+        const response = await ApiClient.get('/favorites', params);
+        if (response.status == 200 || response.status == 201) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.log('fetching products error ', error);
+    }
+
+    return null;
+};
 
 export const fetchSearchProducts = async (params)=>{
     try {
@@ -107,12 +126,12 @@ export const fetchSearchProducts = async (params)=>{
 
 export const addToFavorites = async (id) => {
     try {
-        const response = await ApiClient.get(`/products/${id}/addtofav`);
+        const response = await ApiClient.post(`/products/${id}/addtofav`);
         if (response.status == 200 || response.status == 201) {
             return response.data.data;
         }
     } catch (error) {
-        console.log('addToFavoritesError ', error);
+        console.log('addToFavoritesError ', error.response);
     }
 
     return null;
@@ -120,12 +139,25 @@ export const addToFavorites = async (id) => {
 
 export const removeFromFavorites = async (id) => {
     try {
-        const response = await ApiClient.get(`/products/${id}/remfromfav`);
+        const response = await ApiClient.post(`/products/${id}/remfromfav`);
         if (response.status == 200 || response.status == 201) {
             return response.data.data;
         }
     } catch (error) {
-        console.log('removeFromFavoritesError ', error);
+        console.log('removeFromFavoritesError ', error.response);
+    }
+
+    return null;
+}
+export const postComment = async (params)=>{
+    try {
+        console.log('params ', params);
+        const response = await ApiClient.post(`/comments`,params);
+        if (response.status == 200 || response.status == 201) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.log('comments err ', error.response);
     }
 
     return null;
