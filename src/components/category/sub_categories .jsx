@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button } from 'antd';
+import { Form, Button, Input } from 'antd';
 import { CustomAttributeField } from "../custom_components";
 
 const SubCategories = ({category, onSubmit}) => {
@@ -16,7 +16,7 @@ const SubCategories = ({category, onSubmit}) => {
       <>
         {category?.children?.length ?
           <>
-          <div className="col-md-12 mt-3">
+          <div className="col-md-12 mt-3 pb-3">
           <label className="mb-3" style={{fontSize:18}}>Поиск</label>
             <Form
               form={form}
@@ -27,7 +27,7 @@ const SubCategories = ({category, onSubmit}) => {
               <div className="row">
                 {category?.custom_attribute != null ?  
                   category.custom_attribute.map((item) => (
-                    <div className="col-md-4">  
+                    <div className="col-xl-4">  
                       <Form.Item
                         key={item.name}
                         label={item.title}
@@ -39,8 +39,18 @@ const SubCategories = ({category, onSubmit}) => {
                     </div>
                   ))
                 : <>No attributes</>}
+               <div className="col-xl-4">
+                  <Form.Item
+                  key={"price"}
+                  label={"Цена от:"}
+                  name={"price"}
+                  rules={[{required: "", message:""}]}
+                  >
+                    <Input type="number"/>
+                  </Form.Item>
+                </div>
               </div>
-              <Button onClick={onChange}>Send</Button>
+              <Button onClick={onChange} style={{backgroundColor:"#4dab04",color:"#fff"}}>Поиск</Button>
             </Form>
           </div>
           <div className="col-md-12 py-2 bg-light">

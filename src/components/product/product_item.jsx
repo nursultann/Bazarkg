@@ -32,8 +32,8 @@ const ProductItem = ({product}) => {
         <a onClick={() => navigateToProductDetailsPage(product)}>
             <div className="col-md-12 shadow-sm" style={{ ...baseStyle }}>
                 <div className="row">    
-                <div className="col-md-12 px-0" style={{ height: 130 }}>
-                    <AppImage height={140} width="100%" src={image} classNameName="card-img-top rounded" style={{objectFit: "cover"}} />
+                <div className="col-md-12 px-0" style={{ height: 150 }}>
+                    <AppImage height={150} width="100%" src={image} classNameName="card-img-top rounded" style={{objectFit: "cover"}} />
                     {product.is_vip ? 
                         <div style={{ position: "absolute", left: "30px", top: "10px",  }}><span className="badge badge-danger p-2">VIP</span></div> 
                         : <></>}

@@ -97,9 +97,9 @@ const Ad = ({match}) => {
         <div>
             <Navbar />  
                 {productDetails != null ? <>          
-                <div className="col-xl-12 mt-xl-2">
-                    <div className="row">
-                        <div className="col-xl-8">
+                <div className="col-xl-12 mt-xl-3 mt-3">
+                    <div className="row px-xl-3 px-2">
+                        <div className="col-xl-8 border rounded py-3">
                             <div className="row">
                                 <div className="col-xl-12">
                                 <label style={{fontSize:"22px",whiteSpace:"normal"}}>{productDetails.title}</label><br/>
@@ -138,7 +138,7 @@ const Ad = ({match}) => {
                             </div>
                         </div>
                         <div className="col-xl-4">
-                        <div className="col-xl-12 mt-2">
+                        <div className="col-xl-12 border rounded mt-3 mt-xl-0">
                                     <div className="row">
                                         <div className="col-xl-12 mt-xl-4">
                                         <hr className="d-block d-xl-none" /> 
@@ -155,7 +155,7 @@ const Ad = ({match}) => {
                                         <hr className="d-block d-xl-none" /> 
                                          
                                         {!favorite ?
-                                        <button class="btn btn-outline-secondary col-xl-12" onClick={addFav}><i class="far fa-heart"></i>Добавить в избранное</button>    
+                                        <button class="btn btn-outline-secondary col-xl-12" onClick={addFav}><i class="far fa-heart"></i> Добавить в избранное</button>    
                                         :<button class="btn col-xl-12 text-white" style={{backgroundColor:"#4dab04"}} onClick={removeFav}><i class="far fa-heart"></i>Удалить из избранного</button>
                                         }
                                         
@@ -215,7 +215,8 @@ const Ad = ({match}) => {
                                 <hr/>
                             </div>
                         </div>
-                            <div className="col-xl-8">
+                            <div className="col-xl-8 border rounded mt-3 py-3">
+                            <label style={{fontSize:15}}>Комментарии</label>
                             {
                                 token != null ? 
                                     <>

@@ -42,7 +42,7 @@ const App = ({match}) => {
                 backgroundImage: "url('https://www.house.kg/build/images/banners/branding-left-imarat-20-may.e320d43f.png')",
                 backgroundRepeat: "no-repeat"}}>
             </div>
-            <div className="col-lg-8 px-0" style={{ backgroundColor: '#fff' }}>
+            <div className="col-lg-8 px-0" style={{ backgroundColor: '#fff'}}>
             <div className="col-lg-12 bg-success px-0 text-white text-center">
                 <img src={top} width="100%"/>
             </div>

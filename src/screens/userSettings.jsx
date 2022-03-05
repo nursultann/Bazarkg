@@ -87,6 +87,7 @@ const Settings = () => {
         if (name != null || name.length > 4){
         const params = {
             'name': name,
+            'avatar':imageUrl
         }
         console.log(userid);
         message.loading({ content: 'Загрузка...', key });
@@ -146,10 +147,10 @@ const Settings = () => {
                 :
             <div>
             <Navbar/>
-            <div className="col-md-12">
+            <div className="col-xl-12">
             <div className="row px-3 mb-5">
-                <div className="col-md-4 bg-white rounded">
-                      <div className="col-md-12 py-2">
+                <div className="col-xl-4 border mt-3 mt-xl-3 bg-white rounded">
+                      <div className="col-xl-12 py-2">
                             <div className="row">
                                 <div className="col-12">
                                 <Avatar size={64} icon={<UserOutlined />}/>
@@ -158,28 +159,29 @@ const Settings = () => {
                             </div> 
                       </div>
                       <hr/>
-                      <div className="col-md-12">
-                          <label>+{user.phone}</label>
-                          <br/>
-                          <Link to="/wallets">Пополнить</Link>: {user.balance} сом
-                          <br/>
-                          <Link to="/profile">Мои объявления</Link>
-                          <br/>
-                          <Link to="/settings">Настройки</Link>
+                      <div class="row">
+                      <div className="col-xl-12">
+                            <ul class="list-group">
+                                <li class="list-group-item">+{user.phone}</li>
+                                <li class="list-group-item"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
+                                <li class="list-group-item"><Link to="/profile">Мои объявления</Link></li>
+                                <li class="list-group-item"><Link to="/favorites">Избранные</Link></li>
+                                <li class="list-group-item"><Link to="/settings">Настройки</Link></li>
+                            </ul>
+                      </div>
                       </div>
                       <hr/>
                 </div>
-                <div className="col-md-8 mt-3 mt-md-0">
-                        <div className="col-md-12 shadow-sm py-3">
+                <div className="col-xl-8 mt-3 mt-xl-0">
+                        <div className="col-xl-12 mt-3 border rounded py-3">
                             <label style={{fontSize:18}}>Настройки пользователя</label>
                             <div className="row py-3">
-                                <div className="col-md-12 mb-3">
+                                <div className="col-xl-12 mb-3">
                                 <Upload
                                     name="avatar"
                                     listType="picture-card"
                                     className="avatar-uploader"
                                     showUploadList={false}
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     beforeUpload={beforeUpload}
                                     onChange={handleChange}
                                 >
@@ -193,7 +195,7 @@ const Settings = () => {
                                     <Input placeholder="Имя" onChange={(e)=>{setName(e.target.value)}} />
                                 </div>
                                 <div className="col-md-12 mt-4">
-                                    <Button type="dashed" onClick={saveSettings}>Сохранить изменения</Button>
+                                    <Button style={{color:"#fff",backgroundColor:"#4dab04"}} type="primary" onClick={saveSettings}>Сохранить изменения</Button>
                                 </div>
                             </div>
                         </div>

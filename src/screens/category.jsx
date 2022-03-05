@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryProducts, fetchCategoryDetails } from "../api";
 import ProductItem from "../components/product/product_item";
 import SubCategories from "../components/category/sub_categories ";
-import {Button} from "antd";
+import {Button,Spin} from "antd";
 
 const Category = ({match})=> {
     const dispatch = useDispatch();
@@ -55,7 +55,13 @@ const Category = ({match})=> {
                 fetchCategory(values);
             }} />
             {isLoading && !categoryProducts?.length ? 
-                <div>Loading</div> 
+                <div>
+                    <center className="py-5">
+                    <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                    </div>
+                    </center>
+              </div> 
                 :
                 <div className="row mx-0 mt-3">
                     <div className="col-md-12">
@@ -78,7 +84,9 @@ const Category = ({match})=> {
                                 variant="outlined"
                                 onClick={() => {
                                 fetchProducts();
-                            }}>
+                            }}
+                            style={{backgroundColor:"#4dab04",color:"#fff"}}
+                            >
                                 Показать еще
                             </Button>
                         </center> 

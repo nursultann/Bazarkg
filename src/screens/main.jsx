@@ -96,7 +96,7 @@ const Main = () => {
                 variant="outlined"
                 onClick={() => {
                   fetchProducts();
-                }}>
+                }} style={{backgroundColor:"#4dab04",color:"#fff"}}>
                   Показать еще
               </Button>
             </center>
