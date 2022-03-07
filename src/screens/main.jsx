@@ -15,23 +15,24 @@ import { UpOutlined } from "@ant-design/icons";
 import ProductGridList from "../components/product/product_grid_list";
 import Bussiness_Slider from "../components/bussiness/bussiness_slider";
 
-const Main = () => {  
+const Main = () => {
   const dispatch = useDispatch();
-  const {products} = useSelector((state) => state.product);
+  const { products } = useSelector((state) => state.product);
 
   const limit = 20;
   const [offset, setOffset] = useState(0);
+
   const fetchInitProducts = async () => {
-    let _products = await api.fetchProducts({'sub': true, 'with': 'user'});
+    let _products = await api.fetchProducts({ 'sub': true, 'with': 'user' });
     if (_products != null) {
-      _products = _products.concat(await api.fetchProducts({'with': 'user'}));
+      _products = _products.concat(await api.fetchProducts({ 'with': 'user' }));
       dispatch(setProducts(_products));
       setOffset(offset + limit);
     }
   };
 
   const fetchProducts = async () => {
-    let prods = products.concat(await api.fetchProducts({offset: offset}));
+    let prods = products.concat(await api.fetchProducts({ offset: offset }));
     if (prods != null) {
       dispatch(setProducts(prods));
       setOffset(offset + limit);
@@ -60,7 +61,7 @@ const Main = () => {
       <main role="main" className="container-fluid mb-5">
         <div className="row">
           <div className="col-lg-12">
-            <label className="" style={{fontSize:20}}>Новые Объявления</label>
+            <label className="" style={{ fontSize: 20 }}>Новые Объявления</label>
             <div className="row mt-6 mb-6">
               {products === null || products === undefined || products.length === 0 ?
                 <Grid container spacing={2} className="pl-4 pl-lg-3 pt-4 pb-4">
@@ -83,21 +84,21 @@ const Main = () => {
                     <Skeleton variant="text" />
                   </Grid>
                 </Grid>
-              : products.map((product) => {
+                : products.map((product) => {
                   return (
                     <div className="col-6 col-sm-6 col-xl-3 mt-3">
                       <ProductItem product={product} />
-                    </div>            
+                    </div>
                   )
-              })}
-            </div> 
+                })}
+            </div>
             <center className="mt-5">
-              <Button 
+              <Button
                 variant="outlined"
                 onClick={() => {
                   fetchProducts();
                 }}>
-                  Показать еще
+                Показать еще
               </Button>
             </center>
           </div>
@@ -108,8 +109,8 @@ const Main = () => {
           </BackTop>
         </div>
       </main>
-      <Footer/>
-    </div>    
+      <Footer />
+    </div>
   );
 }
 

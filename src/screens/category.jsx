@@ -1,16 +1,16 @@
 import React from "react";
-import{ useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryProducts, fetchCategoryDetails } from "../api";
 import ProductItem from "../components/product/product_item";
 import SubCategories from "../components/category/sub_categories ";
-import {Button} from "antd";
+import { Button } from "antd";
 
-const Category = ({match})=> {
+const Category = ({ match }) => {
     const dispatch = useDispatch();
-    const [categoryProducts,setProducts] = useState();
+    const [categoryProducts, setProducts] = useState();
     const [category, setCategory] = useState();
     const [formValues, setFormValues] = useState({});
 
@@ -46,45 +46,45 @@ const Category = ({match})=> {
         fetchCategory();
     }, []);
 
-    return(
+    return (
         <>
             <Navbar />
             <SubCategories category={category} onSubmit={(form) => {
-                const values = {'filter_attributes': form.getFieldsValue()};
+                const values = { 'filter_attributes': form.getFieldsValue() };
                 setFormValues(values);
                 fetchCategory(values);
             }} />
-            {isLoading && !categoryProducts?.length ? 
-                <div>Loading</div> 
+            {isLoading && !categoryProducts?.length ?
+                <div>Loading</div>
                 :
                 <div className="row mx-0 mt-3">
                     <div className="col-md-12">
-                        <label style={{fontSize:18}}>По категории</label>
+                        <label style={{ fontSize: 18 }}>По категории</label>
                     </div>
                     {(!categoryProducts?.length) ?
                         <div className="col-md-12 py-5">
                             <center>Нет объявлений</center>
                         </div>
-                    : categoryProducts?.map((product) => {
-                        return(
-                            <div className="col-6 col-sm-6 col-xl-3 mt-3 mb-3">
-                                <ProductItem product={product} />
-                            </div>            
-                        )
-                    })}
+                        : categoryProducts?.map((product) => {
+                            return (
+                                <div className="col-6 col-sm-6 col-xl-3 mt-3 mb-3">
+                                    <ProductItem product={product} />
+                                </div>
+                            )
+                        })}
                     <div className="col-md-12 py-5">
                         <center className="">
-                            <Button 
+                            <Button
                                 variant="outlined"
                                 onClick={() => {
-                                fetchProducts();
-                            }}>
+                                    fetchProducts();
+                                }}>
                                 Показать еще
                             </Button>
-                        </center> 
+                        </center>
                     </div>
                 </div>
-            }   
+            }
             <Footer />
         </>
     );
