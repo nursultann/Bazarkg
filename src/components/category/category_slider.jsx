@@ -38,10 +38,19 @@ const CategorySlider = () => {
         prevArrow: <SampleArrow />,
         
         responsive: [
-            {
+          {
+            breakpoint: 1280,
+            settings: {
+              slidesToShow: 8,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true
+            }
+          },  
+          {
               breakpoint: 1024,
               settings: {
-                slidesToShow: 11,
+                slidesToShow: 8,
                 slidesToScroll: 3,
                 infinite: true,
                 dots: true
