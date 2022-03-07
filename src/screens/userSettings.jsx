@@ -26,36 +26,29 @@ function getBase64(img, callback) {
     reader.readAsDataURL(img);
 }
 
-function beforeUpload(file) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-}
-
 const Settings = () => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageurl] = useState();
     const [name, setName] = useState();
     const [userid, setUserid] = useState();
-    const handleChange = (info) => {
-        if (info.file.status === 'uploading') {
-            setLoading(true);
-            return;
+    const [file, setFile] = useState();
+
+    function beforeUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            message.error('Image must smaller than 2MB!');
+            return false;
         }
-        if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, i => {
-                setLoading(false);
-                setImageurl(i);
-            }
-            );
-        }
+
+        setFile(file);
+        getBase64(file, function (result) {
+            setImageurl(result);
+        });
+
+        return false;
     }
+
+    const handleChange = (info) => { }
 
     const uploadButton = (
         <div>
@@ -91,22 +84,31 @@ const Settings = () => {
     };
 
     const saveSettings = async () => {
-        if (name != null || name.length > 4) {
-            const params = {
-                'name': name,
+        const formData = new FormData();
+        if (name != null) {
+            if (name.length > 4) {
+                formData.append('name', name);
+            } else {
+                message.error('Имя не может быть короче 4 символов', 10);
+                return;
             }
-            console.log(userid);
+
+        }
+        if (file != null) {
+            formData.append('avatar', file);
+        }
+        if (name != null || file != null) {
+            formData.append('_method', 'PATCH');
             message.loading({ content: 'Загрузка...', key });
-            const result = await userSettings(params, userid, function (data) {
+            const result = await userSettings(formData, userid, function (data) {
+                fetchUserDetails();
                 setTimeout(() => {
                     message.success({ content: 'Успешно!', key, duration: 2 });
                 }, 1000);
-                window.location.href = '/profile';
+                // window.location.href = '/profile';
             }, function (data) {
                 console.log("Error");
             });
-        } else {
-            message.error('Имя не может быть короче 4 символов', 10);
         }
     }
 
@@ -161,7 +163,7 @@ const Settings = () => {
                             <div className="col-md-12 py-2">
                                 <div className="row">
                                     <div className="col-12">
-                                        <Avatar size={64} icon={<UserOutlined />} />
+                                        <Avatar size={64} icon={<img src={user.media[0].original_url} />} />
                                         <label className="ml-3">{user.name}</label>
                                     </div>
                                 </div>
@@ -169,8 +171,6 @@ const Settings = () => {
                             <hr />
                             <div className="col-md-12">
                                 <label>+{user.phone}</label>
-                                <br />
-                                <Link to="/wallets">Пополнить</Link>: {user.balance} сом
                                 <br />
                                 <Link to="/profile">Мои объявления</Link>
                                 <br />

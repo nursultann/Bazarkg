@@ -7,8 +7,9 @@ import { setProductDetails } from "../redux/actions/product_actions";
 import Carousel from 'react-gallery-carousel';
 import { FacebookShareButton, WhatsappShareButton, TelegramShareButton } from "react-share";
 import { FacebookIcon, WhatsappIcon, TelegramIcon } from "react-share";
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, Tooltip } from 'antd';
 import moment from 'moment';
+import { createComment } from "../api/product";
 
 const { TextArea } = Input;
 
@@ -18,7 +19,7 @@ const Ad = ({ match }) => {
 
     const fetchProductDetails = async () => {
         const productDetails = await fetchProduct(match.params.id, {
-            'with': 'category;customAttributeValues.customAttribute;region;city;user'
+            'with': 'category;customAttributeValues.customAttribute;region;city;user;comments.user'
         });
         if (productDetails != null) {
             dispatch(setProductDetails(productDetails));
@@ -29,17 +30,20 @@ const Ad = ({ match }) => {
     const [submitting, setSubmitting] = useState(false);
     const [value, setValue] = useState('');
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
         if (!value) {
             return;
         }
         setSubmitting(true);
 
-        setTimeout(() => {
+        const result = await createComment(value, productDetails.id, productDetails.user_id);
+        if (result) {
             alert("added" + value);
-            setSubmitting(false);
             setValue('');
-        }, 1000);
+            fetchProductDetails();
+        }
+
+        setSubmitting(false);
     }
 
     const CommentList = (productDetails) => (
@@ -47,7 +51,14 @@ const Ad = ({ match }) => {
             dataSource={productDetails.comments}
             header={`${productDetails.comments.length} ${productDetails.comments.length > 1 ? 'Комментариев' : 'Комментариев'}`}
             itemLayout="horizontal"
-            renderItem={props => <Comment {...props} />}
+            renderItem={item => <Comment
+                actions={[
+                    <span key="comment-basic-reply-to">Ответить</span>,
+                ]}
+                avatar={<Avatar src={item.user.media?.length ? item.user.media[0].original_url : 'https://joeschmoe.io/api/v1/random'} />}
+                author={item.user.name}
+                content={item.text}
+            />}
         />
     );
 
@@ -182,7 +193,8 @@ const Ad = ({ match }) => {
                                             productDetails.can_comment == "all" ?
                                                 <div className="col-xl-12">
                                                     {
-                                                        productDetails.comments != null && productDetails.comments.length > 0 ? <CommentList comments={productDetails.comments} />
+                                                        productDetails.comments?.length
+                                                            ? <CommentList comments={productDetails.comments} />
                                                             : <>Нет комментариев</>
                                                     }
                                                     <Comment
@@ -205,7 +217,8 @@ const Ad = ({ match }) => {
                                                 </div>
                                                 :
                                                 <></>
-                                        }</>
+                                        }
+                                    </>
                                     :
                                     <>
                                         <div className="col-xl-12 py-2">
