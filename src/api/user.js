@@ -2,7 +2,7 @@ import ApiClient from "./ApiClient";
 
 export const login = async (phone, password, onSuccess, onError) => {
     try {
-        const params = {'phone': phone, 'password': password};
+        const params = { 'phone': phone, 'password': password };
         const response = await ApiClient.post('/login', params);
         if (response.status == 200 || response.status == 201) {
             if (onSuccess != null) onSuccess(response.data.data);
@@ -11,7 +11,7 @@ export const login = async (phone, password, onSuccess, onError) => {
         if (onError != null) onError(error);
     }
 };
-export const register = async (params , onSuccess = null, onError = null) => {
+export const register = async (params, onSuccess = null, onError = null) => {
     await ApiClient.post('/register', params).then(response => {
         if (response.status == 200 || response.status == 201) {
             if (onSuccess != null) onSuccess(response.data.data);
@@ -20,7 +20,7 @@ export const register = async (params , onSuccess = null, onError = null) => {
         if (onError != null) onError(error);
     });
 };
-export const passwordChange = async (params , onSuccess = null, onError = null) => {
+export const passwordChange = async (params, onSuccess = null, onError = null) => {
     console.log('params', params);
     await ApiClient.post('/user/change/password', params).then(response => {
         if (response.status == 200 || response.status == 201) {
@@ -44,7 +44,7 @@ export const userDetails = async (params) => {
 };
 export const checkPhone = async (phone) => {
     try {
-        const response = await ApiClient.get('/user/check', {'phone': phone});
+        const response = await ApiClient.get('/user/check', { 'phone': phone });
         if (response.status == 200 || response.status == 201) {
             return true;
         }
@@ -52,12 +52,12 @@ export const checkPhone = async (phone) => {
         return false;
     }
 };
-export const changePassword = async (password) =>{
-    
+export const changePassword = async (password) => {
+
 }
-export const deleteAd = async (id) =>{
+export const deleteAd = async (id) => {
     try {
-        const response = await ApiClient.delete('/products/'+ id);
+        const response = await ApiClient.delete('/products/' + id);
         if (response.status == 200 || response.status == 201) {
             return response.data.data;
         }
@@ -68,8 +68,7 @@ export const deleteAd = async (id) =>{
     return null;
 };
 export const userSettings = async (params, onSuccess = null, onError = null) => {
-    console.log('params', params);
-    await ApiClient.patch('/user', params).then(response => {
+    await ApiClient.post('/user', params, 'multipart/form-data').then(response => {
         if (response.status == 200 || response.status == 201) {
             if (onSuccess != null) onSuccess(response.data.data);
         }

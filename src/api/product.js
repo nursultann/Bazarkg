@@ -46,12 +46,25 @@ export const createProduct = async (params) => {
     return null;
 };
 
+export const createComment = async (text, productId, userId, parentId = null) => {
+    try {
+        const response = await ApiClient.post('/comments', { 'text': text, 'advertisement_id': productId, 'user_id': userId, 'parent_id': parentId });
+        if (response.status == 200 || response.status == 201) {
+            return response.data;
+        }
+    } catch (error) {
+        console.log('create product error ', error.response);
+    }
+
+    return null;
+};
+
 export const updateProduct = async (id, params) => {
     try {
         if (params instanceof FormData && !params.has('_method')) {
             params.append('_method', 'PATCH');
-        } else if (typeof params === 'Object' && !params.hasOwnProperty('_method')) { 
-            params['_method'] = 'PATCH'; 
+        } else if (typeof params === 'Object' && !params.hasOwnProperty('_method')) {
+            params['_method'] = 'PATCH';
         } else {
             console.log('params not object');
         }
@@ -112,7 +125,7 @@ export const fetchSearchProducts = async (params)=>{
             if (!params.hasOwnProperty('offset')) params['offset'] = 0;
             if (!params.hasOwnProperty('limit')) params['limit'] = 20;
         }
-        
+
         const response = await ApiClient.get('/products', params);
         if (response.status == 200 || response.status == 201) {
             return response.data.data;
