@@ -76,7 +76,7 @@ const EditAd = ({ match }) => {
       description: description,
     });
   };
-
+  document.title="Редактирование";
   return (
     <div>
       <Navbar />

@@ -111,7 +111,7 @@ const Settings = () => {
             });
         }
     }
-
+    document.title="Настройки пользователя";
     useEffect(() => {
         fetchUserDetails();
         UserProducts();

@@ -27,7 +27,7 @@ const SearchResult = ({ match }) => {
             setOffset(offset + limit);
         }
     };
-
+    document.title="Поиск";
     useEffect(() => {
         fetchInitProducts();
     }, []);

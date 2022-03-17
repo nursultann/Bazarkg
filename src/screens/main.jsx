@@ -38,7 +38,7 @@ const Main = () => {
       setOffset(offset + limit);
     }
   };
-
+  document.title="Главная страница";
   useEffect(() => {
     fetchInitProducts();
   }, []);

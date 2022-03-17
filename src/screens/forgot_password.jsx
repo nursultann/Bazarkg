@@ -105,7 +105,7 @@ const ForgotPassword = () => {
         console.log(`selected ${value}`);
         setCountryCode(value);
     }
-
+    document.title="Восстановление пароля";
     useEffect(() => {
         window.verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
         window.verify.render();

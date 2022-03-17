@@ -107,7 +107,7 @@ const Register = () => {
         console.log(`selected ${value}`);
         setCountryCode(value);
     }
-
+    document.title="Регистрация";
     useEffect(() => {
         window.verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
         window.verify.render();

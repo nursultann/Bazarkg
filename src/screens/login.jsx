@@ -37,7 +37,7 @@ const Sign = () => {
         console.log(`selected ${value}`);
         setCountryCode(value);
     }
-
+    document.title="Вход";
     return (
         <div>
             <Navbar />

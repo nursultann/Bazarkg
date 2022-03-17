@@ -27,6 +27,7 @@ const Category = ({match})=> {
             setProducts(products);
             // dispatch(setPr);
             setOffset(offset + limit);
+            document.title="Поиск по категории: "+category.name;
         }
         setIsLoading(false);
     };
@@ -45,7 +46,6 @@ const Category = ({match})=> {
     useEffect(() => {
         fetchCategory();
     }, []);
-
     return(
         <>
             <Navbar />

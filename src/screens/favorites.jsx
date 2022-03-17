@@ -40,6 +40,7 @@ const Favorites = () => {
             setOffset(offset + limit);
         }
     };
+    document.title="Избранные";
     useEffect(() => {
         fetchUserDetails();
         UserProducts();

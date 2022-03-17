@@ -39,7 +39,7 @@ const Profile = () => {
             setOffset(offset + limit);
         }
     };
-
+    document.title="Личный кабинет";
     useEffect(() => {
         fetchUserDetails();
         UserProducts();

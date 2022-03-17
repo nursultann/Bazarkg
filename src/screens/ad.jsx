@@ -29,6 +29,7 @@ const Ad = ({ match }) => {
             dispatch(setProductDetails(productDetails));
             setFavorite(productDetails.is_favorite);
             console.log(favorite);
+            document.title = productDetails.title;
         }
     };
 
