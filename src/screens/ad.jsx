@@ -10,6 +10,7 @@ import { FacebookShareButton, WhatsappShareButton, TelegramShareButton } from "r
 import { FacebookIcon, WhatsappIcon, TelegramIcon } from "react-share";
 import { Comment, Avatar, Form, Button, List, Input, Tooltip,message } from 'antd';
 import moment from 'moment';
+import { UserOutlined } from '@ant-design/icons';
 import { createComment } from "../api/product";
 const key = "updateable";
 const { TextArea } = Input;
@@ -27,6 +28,7 @@ const Ad = ({ match }) => {
          if (productDetails != null) {
             dispatch(setProductDetails(productDetails));
             setFavorite(productDetails.is_favorite);
+            console.log(favorite);
         }
     };
 
@@ -64,9 +66,9 @@ const Ad = ({ match }) => {
             header={`${productDetails.comments.length} ${productDetails.comments.length > 1 ? 'Комментариев' : 'Комментариев'}`}
             itemLayout="horizontal"
             renderItem={item => <Comment
-                actions={[
-                    <span key="comment-basic-reply-to">Ответить</span>,
-                ]}
+                // actions={[
+                //     <span key="comment-basic-reply-to">Ответить</span>,
+                // ]}
                 avatar={<Avatar src={item.user.media?.length ? item.user.media[0].original_url : 'https://joeschmoe.io/api/v1/random'} />}
                 author={item.user.name}
                 content={item.text}
@@ -157,7 +159,7 @@ const Ad = ({ match }) => {
                                         <div className="col-xl-12 mt-xl-2">
                                         <hr className="d-block d-xl-none" /> 
                                          
-                                        {!favorite ?
+                                        {favorite == null || favorite == false?
                                         <button class="btn btn-outline-secondary col-xl-12" onClick={addFav}><i class="far fa-heart"></i> Добавить в избранное</button>    
                                         :<button class="btn col-xl-12 text-white" style={{backgroundColor:"#4dab04"}} onClick={removeFav}><i class="far fa-heart"></i>Удалить из избранного</button>
                                         }
@@ -166,28 +168,18 @@ const Ad = ({ match }) => {
                                         </>
                                         :<></>
                                         }
-                                        <div className="col-xl-12 mt-xl-2">
-                                        <hr className="d-block d-xl-none" /> 
-                                        <button class="btn btn-outline-danger col-xl-12"><i class="fas fa-exclamation-triangle"></i> Пожаловаться</button>    
-                                        </div>
-                                        <div className="col-xl-12 mt-xl-2">
-                                        <hr/>   
-                                        <img src={userDetail.media[0].original_url} style={{borderRadius:"50%",width:"50px", height:"50px"}}/>
-                                        <label className="ml-2">{productDetails.user != null ? productDetails.user.name : <></> }</label>
-                                        <hr/>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-12 mt-xl-2">
-                                        <hr className="d-block d-xl-none" />
-                                        <button class="btn btn-outline-secondary col-xl-12"><i class="far fa-heart"></i> Избранное</button>
-                                    </div>
                                     <div className="col-xl-12 mt-xl-2">
                                         <hr className="d-block d-xl-none" />
                                         <button class="btn btn-outline-danger col-xl-12"><i class="fas fa-exclamation-triangle"></i> Пожаловаться</button>
                                     </div>
+                                    </div>
                                     <div className="col-xl-12 mt-xl-2">
                                         <hr />
-                                        <img src="https://www.bazar.kg/build/images/no-avatar.451f5561.svg" style={{ borderRadius: "50%", width: "50px", height: "50px" }} />
+                                        {productDetails.user.media?.length ?
+                                        <img src={productDetails.user.media[0].original_url} style={{ borderRadius: "50%", width: "50px", height: "50px" }} />
+                                        :
+                                        <Avatar size={42} icon={<UserOutlined />} />
+                                    }
                                         <label className="ml-2">{productDetails.user != null ? productDetails.user.name : <></>}</label>
                                         <hr />
                                     </div>
@@ -280,7 +272,6 @@ const Ad = ({ match }) => {
                         </div>
                 </div>
             </> : <div>loading</div>}
-            <Footer />
         </div>
     );
 }

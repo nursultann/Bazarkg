@@ -45,6 +45,7 @@ const CreateAd = () => {
       <div className="col-md-8 py-5">
         <center className="pb-4">
           <label style={{ fontSize: 25 }}>Создать новое объявление</label>
+          <p>Поля, обозначенные <span className="text-danger">*</span>  - обязательные. После создания объявления Вы можете редактировать и удалять его в Личном кабинете.</p>
         </center>
         <ProductFields
           form={form}
@@ -76,7 +77,6 @@ const CreateAd = () => {
           }}
         />
       </div>
-      <Footer />
     </div>
   );
 }

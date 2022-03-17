@@ -239,7 +239,6 @@ const Register = () => {
                     {steps[current].content}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

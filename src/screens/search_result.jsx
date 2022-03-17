@@ -79,7 +79,6 @@ const SearchResult = ({ match }) => {
                 </center>
                 <hr />
             </div>
-            <Footer />
         </div>
     );
 }

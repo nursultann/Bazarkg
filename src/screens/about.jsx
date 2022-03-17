@@ -45,7 +45,6 @@ class About extends React.Component {
                         <div className="col-md-2"></div>
                     </div>
                 </div>
-                <Footer />
             </div>
         );
     }

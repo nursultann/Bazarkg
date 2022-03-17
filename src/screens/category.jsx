@@ -93,7 +93,6 @@ const Category = ({match})=> {
                     </div>
                 </div>
             }   
-            <Footer />
         </>
     );
 }

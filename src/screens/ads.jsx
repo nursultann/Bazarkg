@@ -87,7 +87,6 @@ const Ads = () => {
         </center>
         <hr />
       </div>
-      <Footer />
     </div>
   );
 }

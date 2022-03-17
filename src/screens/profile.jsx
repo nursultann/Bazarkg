@@ -13,9 +13,7 @@ import { setProducts } from "../redux/actions/product_actions";
 import * as api from "../api";
 import ProductItem from "../components/product/user_product_item";
 import { Tabs } from 'antd';
-
 const { TabPane } = Tabs;
-
 const Profile = () => {
     console.log(localStorage.getItem('token'));
     if (!localStorage.getItem('token')) {
@@ -49,8 +47,8 @@ const Profile = () => {
 
     return (
         user === null || user === undefined || user === ""
-            ? <div className="col-md-12">
-                <Skeleton variant=".rectangular" width={'100%'} height={200} />
+            ? <div className="col-md-12 mt-3">
+                <Skeleton variant="rectangular" width={'100%'} height={200} />
                 <div className="row mt-3">
                     <div className="col-md-4">
                         <Skeleton variant="text" />
@@ -82,26 +80,29 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                </div> 
-                :
+                </div>
+            </div>
+            :
             <div>
-            <Navbar/>
-            <div className="col-xl-12">
-            <div className="row px-3 mb-5 mt-3">
-                <div className="col-xl-4 bg-white">
-                      <div className="col-12 border rounded py-3">
-                      <div className="col-xl-12 py-2 alert alert-success">
-                            <div className="row">
-                                <div className="col-12">
-                                <Avatar size={64} icon={<UserOutlined />}/>
-                                    <label className="ml-3">{user.name}</label>
+                <Navbar />
+                <div className="col-xl-12 mt-3">
+                    <div className="row px-3 mb-5">
+                        <div className="col-xl-4 bg-light rounded py-3">
+                            <div className="col-xl-12 alert alert-success">
+                                <div className="row">
+                                    <div className="col-12">
+                                    {user.media?.length ?
+                                        <Avatar size={64} icon={<img src={user.media[0].original_url} />} />
+                                        :
+                                        <Avatar size={42} icon={<UserOutlined />} />
+                                    }
+                                        <label className="ml-3">{user.name}</label>
+                                    </div>
                                 </div>
-                            </div> 
-                      </div>
-                      <hr/>
-                      <div class="row">
-                      <div className="col-xl-12">
+                            </div>
+                            <hr />
+                            <div className="row">
+                            <div className="col-xl-12">
                             <ul class="list-group">
                                 <li class="list-group-item">+{user.phone}</li>
                                 <li class="list-group-item"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
@@ -109,66 +110,12 @@ const Profile = () => {
                                 <li class="list-group-item"><Link to="/favorites">Избранные</Link></li>
                                 <li class="list-group-item"><Link to="/settings">Настройки</Link></li>
                             </ul>
-                      </div>
-                      </div>
-                    </div>  
-                </div>
-                <div className="col-xl-8 border rounded py-2 mt-3 mt-md-0">
-                        <Tabs defaultActiveKey="1">
-                            <TabPane tab="Все объявления" key="1">
-                            <div className="row">
-                                {products.map((product)=>{
-                                    return(
-                                        <>
-                                        <div className="col-6 col-sm-6 col-xl-6 mt-3">
-                                        <ProductItem product={product}/>
-                                        </div>
-                                        </>
-                                    );
-                                })}
-                                </div>
-                            </TabPane>
-                            <TabPane tab="Активные" key="2">
-                            <div className="row">
-                            {products.map((product)=>{
-                                    return(
-                                        <>
-                                        <div className="col-xs-12 col-sm-6 col-xl-6 mt-3">
-                                        <ProductItem product={product}/>
-                                        </div>
-                                        </>
-                                    );
-                                })}
-=======
-                </div>
-            </div>
-            :
-            <div>
-                <Navbar />
-                <div className="col-xl-12">
-                    <div className="row px-3 mb-5">
-                        <div className="col-xl-4 bg-white rounded">
-                            <div className="col-xl-12 py-2">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <Avatar size={64} icon={<UserOutlined />} />
-                                        <label className="ml-3">{user.name}</label>
-                                    </div>
->>>>>>> cdee08dcee277b1fc3d1e71e5d7e1a0fc45be23d
-                                </div>
                             </div>
-                            <hr />
-                            <div className="col-xl-12">
-                                <label>+{user.phone}</label>
-                                <br />
-                                <Link to="/profile">Мои объявления</Link>
-                                <br />
-                                <Link to="/settings">Настройки</Link>
                             </div>
                             <hr />
                         </div>
                         <div className="col-xl-8 mt-3 mt-md-0">
-                            <Tabs defaultActiveKey="1">
+                            <Tabs className="border rounded px-2 pb-3 py-1" defaultActiveKey="1">
                                 <TabPane tab="Все объявления" key="1">
                                     <div className="row">
                                         {products.map((product) => {
@@ -201,7 +148,6 @@ const Profile = () => {
                                     <div className="row">
                                         {products.map((product) => {
                                             if (product.status !== 'inactive') return;
-
                                             return (
                                                 <>
                                                     <div className="col-xs-12 col-sm-6 col-xl-6 mt-3">
@@ -247,7 +193,6 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
     );
 }

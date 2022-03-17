@@ -97,13 +97,8 @@ const Main = () => {
                 variant="outlined"
                 onClick={() => {
                   fetchProducts();
-<<<<<<< HEAD
                 }} style={{backgroundColor:"#4dab04",color:"#fff"}}>
                   Показать еще
-=======
-                }}>
-                Показать еще
->>>>>>> cdee08dcee277b1fc3d1e71e5d7e1a0fc45be23d
               </Button>
             </center>
           </div>
@@ -114,7 +109,6 @@ const Main = () => {
           </BackTop>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

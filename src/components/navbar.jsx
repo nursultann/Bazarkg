@@ -8,7 +8,8 @@ import {
   UserAddOutlined,
   DesktopOutlined,
   SettingOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  StarOutlined
 } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
@@ -47,7 +48,7 @@ const Navbar = () => {
           break;
         case 'favorites':
           navigateTo('/favorites');
-          break;  
+          break;    
         default:
       }
     }}>
@@ -67,7 +68,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="container-fluid">
+      <div className="container-fluid shadow-sm">
         <div>
           <header className="blog-header py-3">
             <div className="row flex-nowrap justify-content-between align-items-center">
@@ -135,7 +136,7 @@ const Navbar = () => {
                         onClose={hide}
                         visible={visible}
                       >
-                        <div style={{ width: "100%" }}>
+                        <div style={{ width: "100%"}}>
                           <Menu
                             defaultSelectedKeys={['1']}
                             defaultOpenKeys={['sub1']}
@@ -147,6 +148,9 @@ const Navbar = () => {
                             </Menu.Item>
                             <Menu.Item onClick={() => navigateTo('/profile')} key="2" icon={<DesktopOutlined />}>
                               Личный кабинет
+                            </Menu.Item>
+                            <Menu.Item onClick={() => navigateTo('/favorites')} key="2" icon={<StarOutlined />}>
+                              Избранные
                             </Menu.Item>
                             <Menu.Item onClick={() => navigateTo('/settings')} key="3" icon={<SettingOutlined />}>
                               Настройки

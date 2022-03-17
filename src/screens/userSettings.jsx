@@ -82,13 +82,6 @@ const Settings = () => {
             setOffset(offset + limit);
         }
     };
-<<<<<<< HEAD
-    const saveSettings = async ()=>{
-        if (name != null || name.length > 4){
-        const params = {
-            'name': name,
-            'avatar':imageUrl
-=======
 
     const saveSettings = async () => {
         const formData = new FormData();
@@ -116,7 +109,6 @@ const Settings = () => {
             }, function (data) {
                 console.log("Error");
             });
->>>>>>> cdee08dcee277b1fc3d1e71e5d7e1a0fc45be23d
         }
     }
 
@@ -160,25 +152,29 @@ const Settings = () => {
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                </div> 
-                :
+                </div>
+            </div>
+            :
             <div>
-            <Navbar/>
-            <div className="col-xl-12">
-            <div className="row px-3 mb-5">
-                <div className="col-xl-4 border mt-3 mt-xl-3 bg-white rounded">
-                      <div className="col-xl-12 py-2">
-                            <div className="row">
-                                <div className="col-12">
-                                <Avatar size={64} icon={<UserOutlined />}/>
-                                    <label className="ml-3">{user.name}</label>
+                <Navbar />
+                <div className="col-md-12 mt-3">
+                    <div className="row px-3 mb-5">
+                        <div className="col-md-4 bg-light rounded py-3">
+                            <div className="col-md-12 alert alert-success">
+                                <div className="row">
+                                    <div className="col-12">
+                                    {user.media?.length ?
+                                        <Avatar size={64} icon={<img src={user.media[0].original_url} />} />
+                                        :
+                                        <Avatar size={42} icon={<UserOutlined />} />
+                                    }
+                                        <label className="ml-3">{user.name}</label>
+                                    </div>
                                 </div>
-                            </div> 
-                      </div>
-                      <hr/>
-                      <div class="row">
-                      <div className="col-xl-12">
+                            </div>
+                            <hr />
+                            <div className="row">
+                            <div className="col-xl-12">
                             <ul class="list-group">
                                 <li class="list-group-item">+{user.phone}</li>
                                 <li class="list-group-item"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
@@ -186,63 +182,12 @@ const Settings = () => {
                                 <li class="list-group-item"><Link to="/favorites">Избранные</Link></li>
                                 <li class="list-group-item"><Link to="/settings">Настройки</Link></li>
                             </ul>
-                      </div>
-                      </div>
-                      <hr/>
-                </div>
-                <div className="col-xl-8 mt-3 mt-xl-0">
-                        <div className="col-xl-12 mt-3 border rounded py-3">
-                            <label style={{fontSize:18}}>Настройки пользователя</label>
-                            <div className="row py-3">
-                                <div className="col-xl-12 mb-3">
-                                <Upload
-                                    name="avatar"
-                                    listType="picture-card"
-                                    className="avatar-uploader"
-                                    showUploadList={false}
-                                    beforeUpload={beforeUpload}
-                                    onChange={handleChange}
-                                >
-                                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                                </Upload>
-                                </div>
-                                <div className="col-md-1">
-                                    <label style={{fontSize:16}}>Имя:</label>
-                                </div>
-                                <div className="col-md-4">       
-                                    <Input placeholder="Имя" onChange={(e)=>{setName(e.target.value)}} />
-                                </div>
-                                <div className="col-md-12 mt-4">
-                                    <Button style={{color:"#fff",backgroundColor:"#4dab04"}} type="primary" onClick={saveSettings}>Сохранить изменения</Button>
-=======
-                </div>
-            </div>
-            :
-            <div>
-                <Navbar />
-                <div className="col-md-12">
-                    <div className="row px-3 mb-5">
-                        <div className="col-md-4 bg-white rounded">
-                            <div className="col-md-12 py-2">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <Avatar size={64} icon={<img src={user.media[0].original_url} />} />
-                                        <label className="ml-3">{user.name}</label>
-                                    </div>
-                                </div>
                             </div>
-                            <hr />
-                            <div className="col-md-12">
-                                <label>+{user.phone}</label>
-                                <br />
-                                <Link to="/profile">Мои объявления</Link>
-                                <br />
-                                <Link to="/settings">Настройки</Link>
                             </div>
                             <hr />
                         </div>
-                        <div className="col-md-8 mt-3 mt-md-0">
-                            <div className="col-md-12 shadow-sm py-3">
+                        <div className="col-md-8 mt-4 mt-md-0">
+                            <div className="col-md-12 border rounded py-3">
                                 <label style={{ fontSize: 18 }}>Настройки пользователя</label>
                                 <div className="row py-3">
                                     <div className="col-md-12 mb-3">
@@ -265,15 +210,13 @@ const Settings = () => {
                                         <Input placeholder="Имя" onChange={(e) => { setName(e.target.value) }} />
                                     </div>
                                     <div className="col-md-12 mt-4">
-                                        <Button type="dashed" onClick={saveSettings}>Сохранить изменения</Button>
+                                        <Button type="primary" onClick={saveSettings} style={{ backgroundColor: '#4dab04', color: "#fff" }}>Сохранить изменения</Button>
                                     </div>
->>>>>>> cdee08dcee277b1fc3d1e71e5d7e1a0fc45be23d
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
     );
 }

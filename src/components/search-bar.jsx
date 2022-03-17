@@ -61,7 +61,7 @@ const SearchBar = () => {
               <div className="col-lg-3 text-center d-none d-lg-block">
                 <a className="navbar-brand" href="/" ><img src='https://www.bazar.kg/build/images/bazarkg-logo.39b422a5.svg' style={{ width: "100%" }} /></a>
               </div>
-              <div className='col-lg-9'>
+              <div className='col-lg-9 mt-3 mt-xl-0 px-0'>
                 <div className='col-12 mr-2 rounded' style={{ backgroundColor: "#fff0bb" }}>
                   <div className='row'>
                     <div className='col-lg-3 px-2 px-lg-1 py-2 py-lg-2'>

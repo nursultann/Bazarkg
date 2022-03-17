@@ -28,19 +28,22 @@ import ForgotPassword from './screens/forgot_password';
 import SearchResult from './screens/search_result';
 import 'moment/locale/ru';
 import Favorites from './screens/favorites';
+import Footer from './components/footer';
 // import SubCategory from './screens/sub_category';
 // import SubSubCategory from './screens/sub_sub_category';
 
 const App = ({match}) => {
     return(
+      // url('https://www.house.kg/build/images/banners/branding-left-imarat-20-may.e320d43f.png')
+      // url('https://www.house.kg/build/images/banners/branding-left-imarat-20-may.e320d43f.png')
       <div className="container-fluid">
         <div className="row">
             <div className="col-lg-2 px-0 d-none d-lg-block text-white text-center" 
               style={{backgroundSize : "auto", backgroundPosition: "right top", 
-                backgroundImage: "url('https://www.house.kg/build/images/banners/branding-left-imarat-20-may.e320d43f.png')",
+                backgroundImage: "",
                 backgroundRepeat: "no-repeat"}}>
             </div>
-            <div className="col-lg-8 px-0" style={{ backgroundColor: '#fff'}}>
+            <div className="col-lg-8 px-0" style={{ backgroundColor: '#fff',minHeight:"500px"}}>
             <div className="col-lg-12 bg-success px-0 text-white text-center">
                 <img src={top} width="100%"/>
             </div>
@@ -72,12 +75,13 @@ const App = ({match}) => {
             </Switch>
           </BrowserRouter>
         </div>
-        <div className="col-lg-1 px-0 d-none d-lg-block text-white text-center"
+        <div className="col-lg-2 px-0 d-none d-lg-block text-white text-center"
           style={{
             backgroundSize: "auto",
-            backgroundImage: "url('https://www.house.kg/build/images/banners/branding-left-imarat-20-may.e320d43f.png')",
+            backgroundImage: "",
             backgroundRepeat: "no-repeat"
           }}></div>
+      <Footer/>
       </div>
     </div>
   );

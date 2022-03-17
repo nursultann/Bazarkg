@@ -88,7 +88,6 @@ const Sign = () => {
                     <a style={{ color: "#4dab04" }} className="ml-2" href="/forgot_password">Забыли пароль</a>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

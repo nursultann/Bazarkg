@@ -12,7 +12,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Button } from "@mui/material";
 import { setProducts } from "../redux/actions/product_actions";
 import * as api from "../api";
-import ProductItem from "../components/product/product_item";
+import ProductItem from "../components/product/fav_product_item";
 import { Tabs } from 'antd';
 const key = 'updatable';
 const { TabPane } = Tabs;
@@ -84,14 +84,17 @@ const Favorites = () => {
                 :
             <div>
             <Navbar/>
-            <div className="col-xl-12">
-            <div className="row px-3 mb-5 mt-3">
-                <div className="col-xl-4">
-                    <div className="col-12 border rounded py-3">
+            <div className="col-xl-12 mt-3">
+            <div className="row px-3 mb-5">
+                <div className="col-xl-4 bg-light rounded py-3">
                       <div className="col-xl-12 alert alert-success">
                             <div className="row">
                                 <div className="col-12">
-                                <Avatar size={64} icon={<UserOutlined />}/>
+                                {user.media?.length ?
+                                        <Avatar size={64} icon={<img src={user.media[0].original_url} />} />
+                                        :
+                                        <Avatar size={42} icon={<UserOutlined />} />
+                                    }
                                     <label className="ml-3">{user.name}</label>
                                 </div>
                             </div> 
@@ -108,10 +111,9 @@ const Favorites = () => {
                             </ul>
                       </div>
                       </div>
-                    </div>
                 </div>
-                <div className="col-xl-8 border rounded pb-4">
-                        <Tabs defaultActiveKey="1">
+                <div className="col-xl-8 pb-4">
+                        <Tabs className="border rounded px-2 pb-3 py-1" defaultActiveKey="1">
                             <TabPane tab="Избранное" key="1">
                             <div className="row px-1">
                                 {
@@ -129,11 +131,11 @@ const Favorites = () => {
                                 })}
                                 </>
                                 :<>
-                                <center className="py-5">
-                                <div class="spinner-border text-success" role="status">
-                                <span class="sr-only">Loading...</span>
+                                <div className="text-center py-5">
+                                    <div class="spinner-border text-success" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
-                                </center>
                                 
                                 </>}
                                 </>
@@ -144,7 +146,6 @@ const Favorites = () => {
                 </div>
             </div>
             </div>
-            <Footer/>
             </div>
         );
 }

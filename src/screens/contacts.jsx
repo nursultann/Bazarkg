@@ -17,7 +17,6 @@ class Contacts extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
         );
     }

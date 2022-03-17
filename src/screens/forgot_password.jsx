@@ -227,7 +227,6 @@ const ForgotPassword = () => {
                     {steps[current].content}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }
