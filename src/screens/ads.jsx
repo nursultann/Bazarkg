@@ -30,7 +30,7 @@ const Ads = () => {
   };
 
   const fetchProducts = async () => {
-    let prods = products.concat(await api.fetchProducts({ offset: offset }));
+    let prods = products.concat(await api.fetchProducts({ offset: offset, 'with': 'user' }));
     if (prods != null) {
       dispatch(setProducts(prods));
       setOffset(offset + limit);

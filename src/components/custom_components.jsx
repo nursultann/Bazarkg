@@ -7,9 +7,7 @@ import {
   Switch
 } from "antd";
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-
 const { Option } = Select;
-
 const CustomAttributeField = (item) => {
   const values = JSON.parse(item.values);
   switch (item.type) {

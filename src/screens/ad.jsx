@@ -29,6 +29,7 @@ const Ad = ({ match }) => {
             dispatch(setProductDetails(productDetails));
             setFavorite(productDetails.is_favorite);
             console.log(favorite);
+            console.log(localStorage.getItem('token'));
             document.title = productDetails.title;
         }
     };
@@ -160,7 +161,7 @@ const Ad = ({ match }) => {
                                         <div className="col-xl-12 mt-xl-2">
                                         <hr className="d-block d-xl-none" /> 
                                          
-                                        {favorite == null || favorite == false?
+                                        {favorite == null || favorite == false ?
                                         <button class="btn btn-outline-secondary col-xl-12" onClick={addFav}><i class="far fa-heart"></i> Добавить в избранное</button>    
                                         :<button class="btn col-xl-12 text-white" style={{backgroundColor:"#4dab04"}} onClick={removeFav}><i class="far fa-heart"></i>Удалить из избранного</button>
                                         }

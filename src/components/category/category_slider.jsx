@@ -103,7 +103,7 @@ const CategorySlider = () => {
     return (
       <div id={category.id}>
         <Link to={`category/${category.id}`} style={{ color: "black" }}>
-          <div className="col-md-12 px-2 mb-3 d-flex flex-column align-items-center justify-content-center">
+          <div className="col-md-12 px-0 mb-3 d-flex flex-column align-items-center justify-content-center">
             <img className="mx-3 mb-1 rounded-circle" src={image} width="50px" height="50px" />
             <p style={{ fontSize: 13, width: 100 }}>{category.name}</p>
           </div>

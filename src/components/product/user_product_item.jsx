@@ -43,6 +43,7 @@ const ProductItem = ({product}) => {
         ? product.media[0].original_url
         : '';
     return (
+        <a style={{fontSize:12}} className="text-dark" onClick={() => navigateToProductDetailsPage(product)}>
             <div className="col-xl-12 border rounded shadow-sm" style={{ ...baseStyle }}>
                 <div className="row">
                     <div className="col-xl-6">
@@ -78,15 +79,14 @@ const ProductItem = ({product}) => {
                         </div>
                     </div>
                     <div className="col-xl-6 py-2 bg-light">
-                        <a style={{fontSize:12}} className="badge badge-success ml-xl-1" onClick={() => navigateToProductDetailsPage(product)}><i class="far fa-eye"></i> Посмотреть</a>
-                        <a style={{fontSize:12}} className="badge badge-warning ml-1 mt-2" href={"/products/"+product.id+"/edit"}><i class="far fa-edit"></i> Редактировать</a>
-                        <a style={{fontSize:12}} className="badge badge-danger ml-1 mt-2" onClick={removeAd}><i class="fas fa-trash-alt"></i> Удалить</a>
-                        <a style={{fontSize:12}} className="badge badge-dark ml-1 mt-2" onClick={removeAd}><i class="fas fa-ban"></i> Деактивировать</a>
-                        <a style={{fontSize:12}} className="badge badge-info ml-1 mt-2" onClick={removeAd}><i class="fas fa-plus-circle"></i> Активировать</a>
+                        <a style={{fontSize:15}} className="ml-1 mt-4" href={"/products/"+product.id+"/edit"}><i class="far fa-edit text-muted"></i> Редактировать</a><br/>
+                        <a style={{fontSize:15}} className="ml-1 mt-4" onClick={removeAd}><i class="fas fa-trash-alt text-muted"></i> Удалить</a><br/>
+                        <a style={{fontSize:15}} className="ml-1 mt-4" onClick={removeAd}><i class="fas fa-ban text-muted"></i> Деактивировать</a><br/>
+                        <a style={{fontSize:15}} className="ml-1 mt-4" onClick={removeAd}><i class="fas fa-plus-circle text-muted"></i> Активировать</a>
                     </div>
                 </div>
             </div>
-            
+        </a>        
     );
 };
 

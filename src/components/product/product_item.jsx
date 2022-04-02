@@ -55,7 +55,7 @@ const ProductItem = ({ product }) => {
                     </div>
                     <div className="row px-0 d-flex justify-content-between">
                         <Avatar size="small" icon={<UserOutlined />} />
-                        <label className="text-muted label" style={{ fontSize: 11 }}>
+                        <label className="text-muted label" style={{ fontSize: 13 }}>
                             <i class="far fa-clock"></i> {update}<br />
                             <i class="far fa-eye"></i>  {product.views}
                         </label>
