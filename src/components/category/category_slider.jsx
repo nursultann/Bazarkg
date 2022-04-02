@@ -30,8 +30,8 @@ const CategorySlider = () => {
   };
     const sliderSettings = {
         dots: true,
-        arrows: false,
-        infinite: false,
+        arrows: true,
+        infinite: true,
         speed: 500,
         slidesToShow: 11,
         slidesToScroll: 1,
@@ -73,6 +73,7 @@ const CategorySlider = () => {
                 slidesToScroll: 2,
                 initialSlide: 2,
                 arrows: true,
+                speed: 500,
               }
             },
             {
@@ -81,6 +82,7 @@ const CategorySlider = () => {
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 arrows: true,
+                speed: 500,
               }
             }
           ]

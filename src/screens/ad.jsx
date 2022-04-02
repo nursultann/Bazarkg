@@ -8,13 +8,21 @@ import { setProductDetails } from "../redux/actions/product_actions";
 import Carousel from 'react-gallery-carousel';
 import { FacebookShareButton, WhatsappShareButton, TelegramShareButton } from "react-share";
 import { FacebookIcon, WhatsappIcon, TelegramIcon } from "react-share";
-import { Comment, Avatar, Form, Button, List, Input, Tooltip,message } from 'antd';
+import { Modal,Comment, Avatar, Form, Button, List, Input, Tooltip,message,Select } from 'antd';
 import moment from 'moment';
 import { UserOutlined } from '@ant-design/icons';
 import { createComment } from "../api/product";
 const key = "updateable";
 const { TextArea } = Input;
+const { Option } = Select;
 
+const childrens = [];
+for (let i = 10; i < 36; i++) {
+  childrens.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+}
+function handleChange(value) {
+    console.log(`Selected: ${value}`);
+  }
 const Ad = ({ match }) => {
     const dispatch = useDispatch();
     const { productDetails } = useSelector((state) => state.product);
@@ -92,13 +100,33 @@ const Ad = ({ match }) => {
         fetchProductDetails();
 
     }, []);
+  const [visible, setVisible] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
+  const [modalText, setModalText] = React.useState('Content of the modal');
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setModalText('The modal will be closed after two seconds');
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    console.log('Clicked cancel button');
+    setVisible(false);
+  };
 
     if (productDetails != null) {
         var time = moment(productDetails.created_at, 'YYYYMMDD, h:mm:ss a');
         moment.locale('ru');
         var update = time.calendar();
     }
-
     return (
         <div>
             <Navbar />  
@@ -172,7 +200,7 @@ const Ad = ({ match }) => {
                                         }
                                     <div className="col-xl-12 mt-xl-2">
                                         <hr className="d-block d-xl-none" />
-                                        <button class="btn btn-outline-danger col-xl-12"><i class="fas fa-exclamation-triangle"></i> Пожаловаться</button>
+                                        <button class="btn btn-outline-danger col-xl-12"  onClick={showModal}><i class="fas fa-exclamation-triangle"></i> Пожаловаться</button>
                                     </div>
                                     </div>
                                     <div className="col-xl-12 mt-xl-2">
@@ -274,6 +302,27 @@ const Ad = ({ match }) => {
                         </div>
                 </div>
             </> : <div>loading</div>}
+            <Modal
+        className="rounded"
+        title="ПОЖАЛОВАТЬСЯ"
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+        footer={null}
+        width={580}
+      >
+         <label style={{fontSize:17,fontWeight:"normal"}}>Причина жалобы:</label>
+         <Select size={"large"} defaultValue="a1" onChange={handleChange} style={{ width: "100%" }}>
+            {childrens}
+         </Select>
+         <TextArea className="rounded mt-3" rows={4} placeholder="Напишите, что вам не понравилось в данном объявлении"/>
+         <hr/>
+         <div className="text-right">
+            <button className="btn btn-outline-light border text-dark mr-2" onClick={handleCancel}>Закрыть</button>
+            <button className="btn text-white" style={{backgroundColor:"#4dab04"}}>Пожаловаться</button>
+         </div>
+      </Modal>
         </div>
     );
 }

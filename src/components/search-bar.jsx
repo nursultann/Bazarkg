@@ -100,9 +100,9 @@ const SearchBar = () => {
                       <Input className='col-lg-12' placeholder="Поиск..." onChange={(e) => { setSearch(e.target.value) }} style={{ width: "100%" }} />
                     </div>
                     <div className='col-lg-2 px-2 px-lg-1 py-2 py-lg-2'>
-                      <Button className='col-11 rounded-pill' type="primary" style={{ backgroundColor: '#4dab04' }} onClick={Search}>
+                      <button className='btn btn-outline-light text-white col-12 rounded' type="primary" style={{ backgroundColor: '#4dab04' }} onClick={Search}>
                         Найти
-                      </Button>
+                      </button>
                     </div>
                   </div>
                 </div>
