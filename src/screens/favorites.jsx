@@ -124,7 +124,7 @@ const Favorites = () => {
                                 {products.map((product)=>{
                                     return(
                                         <>
-                                        <div className="col-xs-12 col-sm-6 col-xl-6 mt-2">
+                                        <div className="col-xs-12 col-sm-6 col-xl-6 mt-4 mt-xl-2">
                                         <ProductItem product={product}/>
                                         </div>
                                         </>
@@ -132,12 +132,17 @@ const Favorites = () => {
                                 })}
                                 </>
                                 :<>
-                                <div className="text-center py-5">
+                                {products?.length>0 ?
+                                <div className="col-xl-12 text-center py-5">
                                     <div class="spinner-border text-success" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
                                 </div>
-                                
+                                :
+                                <div className="col-xl-12 text-center py-5">
+                                    <label>Нет объявлений в избранном</label>
+                                </div>
+                                }
                                 </>}
                                 </>
                                 }

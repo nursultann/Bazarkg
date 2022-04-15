@@ -29,6 +29,7 @@ import SearchResult from './screens/search_result';
 import 'moment/locale/ru';
 import Favorites from './screens/favorites';
 import Footer from './components/footer';
+import UserAds from './screens/user_ads';
 // import SubCategory from './screens/sub_category';
 // import SubSubCategory from './screens/sub_sub_category';
 
@@ -71,6 +72,7 @@ const App = ({match}) => {
               <Route path="/articles" component={Articles} />
               <Route path="/article" component={Article} />
               <Route path="/search_result/:search" component={SearchResult} />
+              <Route path={"/userAds/:id"} component={UserAds}/>
               {/* <Route path="/search_result/:search/products/:id" component={Ad}/> */}
             </Switch>
           </BrowserRouter>

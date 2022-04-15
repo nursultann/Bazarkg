@@ -8,10 +8,10 @@ import {Button,notification,Avatar} from "antd";
 import { deleteAd } from "../../api/user";
 import moment from 'moment';
 import { UserOutlined } from '@ant-design/icons';
+import { activate, deactivate} from "../../api/product";
 const ProductItem = ({product}) => {
     const dispatch = useDispatch();
     const history = useHistory();
-
     const navigateToProductDetailsPage = (product) => {
         dispatch(setProductDetails(product));
         history.push(`products/${product.id}`);
@@ -29,13 +29,30 @@ const ProductItem = ({product}) => {
             description: description,
         });
     };
-
     const removeAd = async () => {
         deleteAd(product.id);
         openNotification('success', 'Успешно удалено!', null);
-        history.push("/");
+        function reload(){
+            window.location.href = "/profile";
+        }
+        setTimeout(reload,1000);
     }
-
+    const deactivateAd = async () =>{
+        deactivate(product.id);
+        openNotification('success', 'Успешно деактивировано!', null);
+        function reload(){
+            window.location.href = "/profile";
+        }
+        setTimeout(reload,1000);
+    }
+    const activateAd = async () =>{
+        activate(product.id);
+        openNotification('success', 'Успешно активировано!', null);
+        function reload(){
+            window.location.href = "/profile";
+        }
+        setTimeout(reload,1000);
+    }
     var time = moment(product.created_at, 'YYYYMMDD, h:mm:ss a');
     moment.locale('ru');
     var update = time.calendar();
@@ -43,7 +60,7 @@ const ProductItem = ({product}) => {
         ? product.media[0].original_url
         : '';
     return (
-        <a style={{fontSize:12}} className="text-dark" onClick={() => navigateToProductDetailsPage(product)}>
+        <>
             <div className="col-xl-12 border rounded shadow-sm" style={{ ...baseStyle }}>
                 <div className="row">
                     <div className="col-xl-6">
@@ -79,14 +96,24 @@ const ProductItem = ({product}) => {
                         </div>
                     </div>
                     <div className="col-xl-6 py-2 bg-light">
-                        <a style={{fontSize:15}} className="ml-1 mt-4" href={"/products/"+product.id+"/edit"}><i class="far fa-edit text-muted"></i> Редактировать</a><br/>
-                        <a style={{fontSize:15}} className="ml-1 mt-4" onClick={removeAd}><i class="fas fa-trash-alt text-muted"></i> Удалить</a><br/>
-                        <a style={{fontSize:15}} className="ml-1 mt-4" onClick={removeAd}><i class="fas fa-ban text-muted"></i> Деактивировать</a><br/>
-                        <a style={{fontSize:15}} className="ml-1 mt-4" onClick={removeAd}><i class="fas fa-plus-circle text-muted"></i> Активировать</a>
+                        <a style={{fontSize:14}} className="ml-1 mt-4" href={"/products/"+product.id+"/edit"}><i class="far fa-edit text-muted"></i> Редактировать</a><br/>
+                        <a style={{fontSize:14}} className="ml-1 mt-4" onClick={removeAd}><i class="fas fa-trash-alt text-muted"></i> Удалить</a><br/>
+                        {product.status == "active" ?
+                        <>
+                        <a style={{fontSize:14}} className="ml-1 mt-4" onClick={deactivateAd}><i class="fas fa-ban text-muted"></i> Деактивировать</a><br/>
+                        </>
+                        :<></>
+                        }
+                        {product.status == "inactive" ?
+                        <>
+                        <a style={{fontSize:14}} className="ml-1 mt-4" onClick={activateAd}><i class="fas fa-plus-circle text-muted"></i> Активировать</a>
+                        </>
+                        :<></>
+                        }
                     </div>
                 </div>
             </div>
-        </a>        
+        </>        
     );
 };
 

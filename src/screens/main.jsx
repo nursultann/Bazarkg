@@ -61,7 +61,7 @@ const Main = () => {
       <main role="main" className="container-fluid mb-5">
         <div className="row">
           <div className="col-lg-12">
-            <label className="" style={{ fontSize: 20 }}>Новые объявления в Кыргызстане</label>
+            <label className="" style={{ fontSize: 20,fontWeight : "600" }}>Новые объявления</label>
             <div className="row mt-6 mb-6">
               {products === null || products === undefined || products.length === 0 ?
                 <Grid container spacing={2} className="pl-4 pl-lg-3 pt-4 pb-4">
@@ -84,7 +84,7 @@ const Main = () => {
                     <Skeleton variant="text" />
                   </Grid>
                 </Grid>
-                : products.map((product) => {
+                :products.map((product) => {
                   return (
                     <div className="col-6 col-sm-6 col-xl-3 mt-3">
                       <ProductItem product={product} />

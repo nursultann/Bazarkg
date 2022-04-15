@@ -51,6 +51,7 @@ const Category = ({match})=> {
             <Navbar />
             <SubCategories category={category} onSubmit={(form) => {
                 const values = {'filter_attributes': form.getFieldsValue()};
+                console.log(values);
                 setFormValues(values);
                 fetchCategory(values);
             }} />
@@ -61,7 +62,7 @@ const Category = ({match})=> {
                     <span class="sr-only">Loading...</span>
                     </div>
                     </center>
-              </div> 
+                </div> 
                 :
                 <div className="row mx-0 mt-3">
                     <div className="col-md-12">

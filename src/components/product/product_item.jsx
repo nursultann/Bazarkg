@@ -42,8 +42,9 @@ const ProductItem = ({ product }) => {
                 </div>
                 <div class="card-body">
                     <div className="row">
-                        <label style={{ fontSize: 17 }} class="card-title px-0 col-md-12 py-0 label">{product.price + " " + product.currency_symbol}</label>
-                        <p style={{ fontSize: 15, fontFamily: "sans-serif", whiteSpace: "nowrap" }} class="card-title label px-0 text-primary py-0 col-md-12">{product.title}</p>
+                        <label style={{ fontSize: 17,fontWeight : "bold"}} class="card-title px-0 col-md-12 py-0">{product.price + " " + product.currency_symbol}</label>
+                        <label style={{fontSize:13,fontFamily:"sans-serif",whiteSpace:"nowrap",overflow: "hidden", 
+                            columnWidth: "10px",fontWeight:"500 "}} class="card-title label px-0 text-primary py-0 col-md-12">{product.title}</label>
                         {/* <p class="card-text" style={{
                                         display: "-webkit-box",
                                         webkitLineClamp: "1",
@@ -53,12 +54,16 @@ const ProductItem = ({ product }) => {
                         Опубликовано: {allDate}
                     </label> */}
                     </div>
-                    <div className="row px-0 d-flex justify-content-between">
-                        <Avatar size="small" icon={<UserOutlined />} />
-                        <label className="text-muted label" style={{ fontSize: 13 }}>
+                    <div className="row">
+                        <div className="col-xl-3 mt-5 px-0">
+                            <Avatar size="small" icon={<UserOutlined />} />
+                        </div>
+                        <div className="col-xl-9 mt-5 px-0 text-right">
+                            <label className="text-muted label" style={{ fontSize: 12 }}>
                             <i class="far fa-clock"></i> {update}<br />
-                            <i class="far fa-eye"></i>  {product.views}
-                        </label>
+                            <b><i class="far fa-eye"></i>  {product.views}</b>
+                            </label>
+                        </div>    
                     </div>
                 </div>
             </div>

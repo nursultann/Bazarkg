@@ -4,14 +4,14 @@ import { useHistory } from "react-router-dom";
 import '../../dist/css/custom_card.css';
 import { setProductDetails } from "../../redux/actions/product_actions";
 import { AppImage } from "../custom_components";
-import {Button,notification,Avatar} from "antd";
-import { deleteAd } from "../../api/user";
+import {Button,notification,Avatar,message} from "antd";
+import { removeFromFavorites} from "../../api/product";
 import moment from 'moment';
 import { UserOutlined } from '@ant-design/icons';
+const key = "updateable";
 const ProductItem = ({product}) => {
     const dispatch = useDispatch();
     const history = useHistory();
-
     const navigateToProductDetailsPage = (product) => {
         dispatch(setProductDetails(product));
         history.push(`products/${product.id}`);
@@ -30,10 +30,10 @@ const ProductItem = ({product}) => {
         });
     };
 
-    const removeAd = async () => {
-        deleteAd(product.id);
-        openNotification('success', 'Успешно удалено!', null);
-        history.push("/");
+    const removeFav = async ()=>{
+        const addToFav = await removeFromFavorites(product.id);
+        message.error({ content: 'Удалено из избранного!', key, duration: 2 });
+        window.location.href="/favorites";
     }
 
     var time = moment(product.created_at, 'YYYYMMDD, h:mm:ss a');
@@ -64,7 +64,7 @@ const ProductItem = ({product}) => {
                 <i class="far fa-eye"></i>  {product.views}
                 </label>
                 </div>
-                <a style={{fontSize:15}} className="mt-2" onClick={removeAd}>Удалить из избранного</a>
+                <i class="fa-solid fa-heart text-danger"></i> <a style={{fontSize:15}} className="mt-2" onClick={removeFav}>Удалить из избранного</a>
             </div>
         </div>
     );

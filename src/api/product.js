@@ -58,6 +58,30 @@ export const createComment = async (text, productId, userId, parentId = null) =>
 
     return null;
 };
+export const deleteComment = async (id) => {
+    try {
+        const response = await ApiClient.delete(`/comments/${id}`);
+        if (response.status == 200 || response.status == 201) {
+            return response.data;
+        }
+    } catch (error) {
+        console.log('create product error ', error.response);
+    }
+
+    return null;
+};
+export const answerComment = async (id,text, productId, userId, parentId = null) => {
+    try {
+        const response = await ApiClient.post(`/comments/${id}`, { 'text': text, 'advertisement_id': productId, 'user_id': userId, 'parent_id': parentId });
+        if (response.status == 200 || response.status == 201) {
+            return response.data;
+        }
+    } catch (error) {
+        console.log('create product error ', error.response);
+    }
+
+    return null;
+};
 
 export const updateProduct = async (id, params) => {
     try {
@@ -185,6 +209,77 @@ export const fetchArticles = async (params = { limit: 20, offset: 0 }) => {
         params['sortedBy'] = 'desc';
 
         const response = await ApiClient.get('/articles', params);
+        if (response.status == 200 || response.status == 201) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.log('fetching products error ', error);
+    }
+
+    return null;
+};
+export const postComplaints = async (params)=>{
+    try {
+        console.log('params ', params);
+        const response = await ApiClient.post(`/complaints`,params);
+        if (response.status == 200 || response.status == 201) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.log('comments err ', error.response);
+    }
+
+    return null;
+}
+export const getComplaints = async ()=>{
+    try {
+        // console.log('params ', params);
+        const response = await ApiClient.get("/complaints/types");
+        if (response.status == 200 || response.status == 201) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.log('comments err ', error.response);
+    }
+
+    return null;
+}
+export const deactivate = async (id)=>{
+    try {
+        console.log('params ', id);
+        const response = await ApiClient.post(`/products/${id}/deactivate`);
+        if (response.status == 200 || response.status == 201) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.log('comments err ', error.response);
+    }
+
+    return null;
+}
+export const activate = async (id)=>{
+    try {
+        console.log('params ', id);
+        const response = await ApiClient.post(`/products/${id}/activate`);
+        if (response.status == 200 || response.status == 201) {
+            return response.data.data;
+        }
+    } catch (error) {
+        console.log('comments err ', error.response);
+    }
+
+    return null;
+}
+export const fetchUsersProducts = async (params) => {
+    try {
+        if (!params.hasOwnProperty('sub')) {
+            if (!params.hasOwnProperty('offset')) params['offset'] = 0;
+            if (!params.hasOwnProperty('limit')) params['limit'] = 20;
+        }
+        params['orderBy'] = 'id';
+        params['sortedBy'] = 'desc';
+        
+        const response = await ApiClient.get('/products', params);
         if (response.status == 200 || response.status == 201) {
             return response.data.data;
         }

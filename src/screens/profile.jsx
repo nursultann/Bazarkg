@@ -105,7 +105,6 @@ const Profile = () => {
                             <div className="col-xl-12">
                             <ul class="list-group">
                                 <li class="list-group-item">+{user.phone}</li>
-                                <li class="list-group-item"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
                                 <li class="list-group-item"><Link to="/profile">Мои объявления</Link></li>
                                 <li class="list-group-item"><Link to="/favorites">Избранные</Link></li>
                                 <li class="list-group-item"><Link to="/settings">Настройки</Link></li>
@@ -116,24 +115,12 @@ const Profile = () => {
                         </div>
                         <div className="col-xl-8 mt-3 mt-md-0">
                             <Tabs className="border rounded px-2 pb-3 py-1" defaultActiveKey="1">
-                                <TabPane tab="Все объявления" key="1">
-                                    <div className="row">
-                                        {products.map((product) => {
-                                            return (
-                                                <>
-                                                    <div className="col-xs-12 col-sm-6 col-xl-6 mt-3">
-                                                        <ProductItem product={product} />
-                                                    </div>
-                                                </>
-                                            );
-                                        })}
-                                    </div>
-                                </TabPane>
                                 <TabPane tab="Активные" key="2">
                                     <div className="row">
+                                    {products?.length>0  ? 
+                                        <>
                                         {products.map((product) => {
                                             if (product.status !== 'active') return;
-
                                             return (
                                                 <>
                                                     <div className="col-xs-12 col-sm-6 col-xl-6 mt-3">
@@ -142,10 +129,18 @@ const Profile = () => {
                                                 </>
                                             );
                                         })}
+                                        </>
+                                        :
+                                        <div className="col-xl-12 text-center py-5">
+                                        <label>Нет объявлений</label>
+                                        </div>
+                                    }
                                     </div>
                                 </TabPane>
                                 <TabPane tab="Неактивные" key="3">
                                     <div className="row">
+                                    {products?.length>0 ? 
+                                        <>
                                         {products.map((product) => {
                                             if (product.status !== 'inactive') return;
                                             return (
@@ -156,10 +151,18 @@ const Profile = () => {
                                                 </>
                                             );
                                         })}
+                                        </>
+                                        :
+                                        <div className="col-xl-12 text-center py-5">
+                                        <label>Нет объявлений</label>
+                                        </div>
+                                    }
                                     </div>
                                 </TabPane>
                                 <TabPane tab="На модерации" key="4">
                                     <div className="row">
+                                    {products?.length>0 ? 
+                                        <>
                                         {products.map((product) => {
                                             if (product.status !== 'moderation') return;
 
@@ -171,10 +174,18 @@ const Profile = () => {
                                                 </>
                                             );
                                         })}
+                                        </>
+                                        :
+                                        <div className="col-xl-12 text-center py-5">
+                                        <label>Нет объявлений</label>
+                                        </div>
+                                    }
                                     </div>
                                 </TabPane>
                                 <TabPane tab="Отключенные" key="5">
                                     <div className="row">
+                                    {products?.length>0 ? 
+                                        <>
                                         {products.map((product) => {
                                             if (product.status !== 'disabled') return;
 
@@ -186,6 +197,12 @@ const Profile = () => {
                                                 </>
                                             );
                                         })}
+                                        </>
+                                        :
+                                        <div className="col-xl-12 text-center py-5">
+                                        <label>Нет объявлений</label>
+                                        </div>
+                                    }
                                     </div>
                                 </TabPane>
                             </Tabs>

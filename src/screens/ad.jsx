@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct, userDetails} from "../api";
-import { addToFavorites, postComment, removeFromFavorites} from "../api/product";
+import { addToFavorites, answerComment, getComplaints, postComment, postComplaints, removeFromFavorites} from "../api/product";
 import { setProductDetails } from "../redux/actions/product_actions";
 import Carousel from 'react-gallery-carousel';
 import { FacebookShareButton, WhatsappShareButton, TelegramShareButton } from "react-share";
@@ -16,19 +16,16 @@ const key = "updateable";
 const { TextArea } = Input;
 const { Option } = Select;
 
-const childrens = [];
-for (let i = 10; i < 36; i++) {
-  childrens.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
-function handleChange(value) {
-    console.log(`Selected: ${value}`);
-  }
 const Ad = ({ match }) => {
     const dispatch = useDispatch();
     const { productDetails } = useSelector((state) => state.product);
     const [favorite,setFavorite] = useState();
     const [userId,setUserId] = useState();
+    const [comment,setComment] = useState(false);
     const [userDetail,setUserDetail] = useState();
+    const [complaintsText,setComplaintsText] = useState();
+    const [reason,setReason] = useState();
+    const [childrens,setChildrens] = useState();
     const fetchProductDetails = async () => {
         const productDetails = await fetchProduct(match.params.id, {
             'with': 'category;customAttributeValues.customAttribute;region;city;user;comments.user'
@@ -36,12 +33,21 @@ const Ad = ({ match }) => {
          if (productDetails != null) {
             dispatch(setProductDetails(productDetails));
             setFavorite(productDetails.is_favorite);
-            console.log(favorite);
-            console.log(localStorage.getItem('token'));
             document.title = productDetails.title;
         }
     };
-
+    //reason
+    const fetchComplaints = async () =>{
+    const complaints = await getComplaints();
+    if(complaints != null){
+    setChildrens(complaints);
+    }
+    // const childrens = [];
+    // for (let i = 10; i < 36; i++) {
+    //   childrens.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+    // }
+}
+//comments
     const token = localStorage.getItem('token');
     const [submitting,setSubmitting]=useState(false);
     const [value,setValue]=useState('');
@@ -65,25 +71,86 @@ const Ad = ({ match }) => {
         const result = await createComment(value, productDetails.id, productDetails.user_id);
         if (result) {
             setValue('');
+            message.success({ content: 'Добавлен комментарий!', key, duration: 2 });
             fetchProductDetails();
         }
         setSubmitting(false);
     }
+    function clickAnswer(userName,id){
+        // setComment(true);
+        // setValue("@"+userName);
+    }
+    function deleteComment(id){
+        // alert(id);
+    }
+    const Answer = async ()=>{
+        const user = await userDetails();
+         if(user != null){
+            setUserId(user.id);
+            setUserDetail(user);
+            
+        }
+        const params = {
+            'text' :value,
+            'advertisement_id':productDetails.id,
+            'user_id':userId
+        }
+        setSubmitting(true);
 
+        const result = await answerComment(value, productDetails.id, productDetails.user_id);
+        if (result) {
+            setValue('');
+            fetchProductDetails();
+        }
+        setSubmitting(false);
+    }
     const CommentList = (productDetails) => (
         <List
             dataSource={productDetails.comments}
             header={`${productDetails.comments.length} ${productDetails.comments.length > 1 ? 'Комментариев' : 'Комментариев'}`}
             itemLayout="horizontal"
             renderItem={item => <Comment
-                // actions={[
-                //     <span key="comment-basic-reply-to">Ответить</span>,
-                // ]}
+                actions={[
+                    <span key="comment-basic-reply-to" onClick={clickAnswer(item.user.name,item.id)}>Ответить</span>,
+                    <span key="comment-basic-reply-to" onClick={deleteComment(item.id)}>Удалить</span>
+                ]}
                 avatar={<Avatar src={item.user.media?.length ? item.user.media[0].original_url : 'https://joeschmoe.io/api/v1/random'} />}
                 author={item.user.name}
                 content={item.text}
             />}
         />
+        // <div className="col-xl-12">
+        // <div className="row">
+        //     <div className="col-xl-12 px-0"><b>{productDetails.comments.length+" Комментариев"}</b></div>
+        // <hr/>
+        // {productDetails.comments.length > 0 ? 
+        // <div>
+        //    {productDetails.comments.map((item)=>
+        //    <div className="col-xl-12">
+        //    <div className="row">
+        //        <div className="col-3 px-0 col-xl-1">
+        //             <img className="rounded-circle" src={item.user.media?.length ? item.user.media[0].original_url : 'https://joeschmoe.io/api/v1/random'} 
+        //             width="100%" />            
+        //        </div>
+        //        <div className="col-9 px-2 col-xl-11">
+        //        <label className="text-muted">{item.user.name}</label><br/>
+        //            {item.text}
+        //         <br/>
+        //         <span key="comment-basic-reply-to" onClick={clickAnswer(item.user.name,item.id)}>Ответить</span>
+        //         <span key="comment-basic-reply-to" onClick={deleteComment(item.id)}>Удалить</span>
+        //        </div>   
+        //     <hr className="col-12"/>   
+        //    </div>
+        //    </div>
+        //    )}   
+        // </div>
+        // :
+        // <>
+        //     Нет Комментариев
+        // </>
+        // }
+        // </div>
+        // </div>
     );
 
     const addFav = async () =>{
@@ -98,8 +165,19 @@ const Ad = ({ match }) => {
     }
     useEffect(() => {
         fetchProductDetails();
+        fetchComplaints();
 
     }, []);
+  //complaints
+  const PostComplaint = async () =>{
+    const params = {
+        'complaint_type_id':reason,
+        'text':complaintsText,
+        'advertisement_id':productDetails.id
+    }
+    const postComplaint = await postComplaints(params);
+    message.success("Ваше обращение отправлено!",1000);
+  }
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [modalText, setModalText] = React.useState('Content of the modal');
@@ -107,7 +185,10 @@ const Ad = ({ match }) => {
   const showModal = () => {
     setVisible(true);
   };
-
+  function handleChange(value) {
+    console.log(`Selected: ${value}`);
+    setReason(value);
+  }
   const handleOk = () => {
     setModalText('The modal will be closed after two seconds');
     setConfirmLoading(true);
@@ -149,13 +230,13 @@ const Ad = ({ match }) => {
                                     <div className="row">
                                         <div className="col-xl-12 mt-3" style={{ fontSize: "14px", whiteSpace: "normal" }}>
                                             <div className="row">
-                                                <label className="col-6">Категория:</label><label className="col-6 label">{productDetails.category != null ? productDetails.category.name : <></>}</label>
-                                                <label className="col-6">Цена:</label><label className="col-6 label">{productDetails.price + " " + productDetails.currency_symbol}</label>
+                                                <label className="col-6"><b>Категория:</b></label><label className="col-6 label">{productDetails.category != null ? productDetails.category.name : <></>}</label>
+                                                <label className="col-6"><b>Цена:</b></label><label className="col-6 label">{productDetails.price + " " + productDetails.currency_symbol}</label>
                                                 {productDetails.custom_attribute_values != null ?
                                                     productDetails.custom_attribute_values.map((item) => {
                                                         return (
                                                             <>
-                                                                <label className="col-6">{item.custom_attribute.title}:</label>
+                                                                <label className="col-6"><b>{item.custom_attribute.title}:</b></label>
                                                                 <label className="col-6">{item.value}</label>
                                                             </>
                                                         )
@@ -168,7 +249,7 @@ const Ad = ({ match }) => {
                             </div>
                             <hr />
                             <div className="col-xl-12">
-                                <label style={{ fontSize: "18px", whiteSpace: "normal" }}>Описание</label>
+                                <label style={{ fontSize: "18px", whiteSpace: "normal" }}><b>Описание</b></label>
                                 <p className="label">{productDetails.description}</p>
                             </div>
                         </div>
@@ -189,9 +270,10 @@ const Ad = ({ match }) => {
                                         <div className="col-xl-12 mt-xl-2">
                                         <hr className="d-block d-xl-none" /> 
                                          
-                                        {favorite == null || favorite == false ?
-                                        <button class="btn btn-outline-secondary col-xl-12" onClick={addFav}><i class="far fa-heart"></i> Добавить в избранное</button>    
-                                        :<button class="btn col-xl-12 text-white" style={{backgroundColor:"#4dab04"}} onClick={removeFav}><i class="far fa-heart"></i>Удалить из избранного</button>
+                                        {favorite ?    
+                                        <button class="btn col-xl-12 text-white" style={{backgroundColor:"#4dab04"}} onClick={removeFav}><i class="far fa-heart"></i>Удалить из избранного</button>
+                                        :
+                                        <button class="btn btn-outline-secondary col-xl-12" onClick={addFav}><i class="far fa-heart"></i> Добавить в избранное</button>
                                         }
                                         
                                         </div>
@@ -205,16 +287,25 @@ const Ad = ({ match }) => {
                                     </div>
                                     <div className="col-xl-12 mt-xl-2">
                                         <hr />
-                                        {productDetails.user.media?.length ?
-                                        <img src={productDetails.user.media[0].original_url} style={{ borderRadius: "50%", width: "50px", height: "50px" }} />
+                                        <a href={"/userAds/"+productDetails.user_id} onMouseOver={{cursor:"pointer"}}>
+                                        {productDetails.user != null ?
+                                        <>
+                                        {productDetails.user?.media?.length ?
+                                        <img className="mb-3" src={productDetails.user.media[0].original_url} style={{ borderRadius: "50%", width: "50px", height: "50px" }} />
                                         :
                                         <Avatar size={42} icon={<UserOutlined />} />
-                                    }
-                                        <label className="ml-2">{productDetails.user != null ? productDetails.user.name : <></>}</label>
+                                        }
+                                        </>
+                                        :<></>
+                                        }
+                                        <label className="ml-2">{productDetails.user != null ? productDetails.user.name : <></>}
+                                        <p className=" border rounded bg-light px-1  text-secondary">{productDetails.user.active_count} объявления пользователя</p>
+                                        </label>
+                                        </a>
                                         <hr />
                                     </div>
                                     <div className="col-6 col-xl-12 mt-2">
-                                        <label className="text-muted">Поделиться</label><br />
+                                        <label className="text-muted"><b>Поделиться</b></label><br />
                                         <FacebookShareButton
                                             url={window.location.href}
                                             quote={"フェイスブックはタイトルが付けれるようです"}
@@ -255,8 +346,8 @@ const Ad = ({ match }) => {
                                 <hr />
                             </div>
                         </div>
-                            <div className="col-xl-8 border rounded mt-3 py-3">
-                            <label style={{fontSize:15}}>Комментарии</label>
+                            <div className="col-xl-8 border rounded mt-3 py-3 mb-5">
+                            <label style={{fontSize:15}}><b>Комментарии</b></label>
                             {
                                 token != null ?
                                     <>
@@ -277,9 +368,16 @@ const Ad = ({ match }) => {
                                                                         onChange={(e) => { setValue(e.target.value) }} value={value} />
                                                                 </Form.Item>
                                                                 <Form.Item>
+                                                                    {!comment ?
                                                                     <Button className="rounded-pill" htmlType="submit" loading={submitting} onClick={onSubmit} style={{ backgroundColor: "#4dab04", color: "#fff" }}>
                                                                         Добавить комментарий
                                                                     </Button>
+                                                                    :
+                                                                    <Button className="rounded-pill" htmlType="submit" loading={submitting} onClick={Answer} style={{ backgroundColor: "#4dab04", color: "#fff" }}>
+                                                                    Ответить на комментарий
+                                                                    </Button>
+                                                                    
+                                                                    }
                                                                 </Form.Item>
                                                             </>
                                                         }
@@ -301,7 +399,17 @@ const Ad = ({ match }) => {
                             }
                         </div>
                 </div>
-            </> : <div>loading</div>}
+            </> 
+            : 
+                <div>
+                    <center className="py-5">
+                    <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                    </div>
+                    </center>
+                </div>
+                
+            }
             <Modal
         className="rounded"
         title="ПОЖАЛОВАТЬСЯ"
@@ -313,14 +421,23 @@ const Ad = ({ match }) => {
         width={580}
       >
          <label style={{fontSize:17,fontWeight:"normal"}}>Причина жалобы:</label>
-         <Select size={"large"} defaultValue="a1" onChange={handleChange} style={{ width: "100%" }}>
-            {childrens}
+         <Select size={"large"} onChange={handleChange} style={{ width: "100%" }}>
+            {childrens?.length?
+            <>
+            {childrens.map((item)=>
+            <>
+                <option value={item.id}>{item.name}</option>
+            </>
+            )}
+            </>
+            :<></>
+            }
          </Select>
-         <TextArea className="rounded mt-3" rows={4} placeholder="Напишите, что вам не понравилось в данном объявлении"/>
+         <TextArea className="rounded mt-3" rows={4} placeholder="Напишите, что вам не понравилось в данном объявлении" onChange={(e)=>setComplaintsText(e.target.value)}/>
          <hr/>
          <div className="text-right">
             <button className="btn btn-outline-light border text-dark mr-2" onClick={handleCancel}>Закрыть</button>
-            <button className="btn text-white" style={{backgroundColor:"#4dab04"}}>Пожаловаться</button>
+            <button className="btn text-white" style={{backgroundColor:"#4dab04"}}  onClick={PostComplaint}>Пожаловаться</button>
          </div>
       </Modal>
         </div>
