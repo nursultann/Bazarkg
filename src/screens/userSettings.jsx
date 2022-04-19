@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import Navbar from "../components/navbar";
-import Footer from "../components/footer";
 import { userDetails, userSettings } from "../api/user";
 import { useEffect, useState } from "react";
 import Skeleton from '@mui/material/Skeleton';
@@ -111,7 +110,7 @@ const Settings = () => {
             });
         }
     }
-    document.title="Настройки пользователя";
+    document.title = "Настройки пользователя";
     useEffect(() => {
         fetchUserDetails();
         UserProducts();
@@ -163,26 +162,26 @@ const Settings = () => {
                             <div className="col-md-12 alert alert-success">
                                 <div className="row">
                                     <div className="col-12">
-                                    {user.media?.length ?
-                                        <Avatar size={64} icon={<img src={user.media[0].original_url} />} />
-                                        :
-                                        <Avatar size={42} icon={<UserOutlined />} />
-                                    }
+                                        {user.media?.length ?
+                                            <Avatar size={64} icon={<img src={user.media[0].original_url} />} />
+                                            :
+                                            <Avatar size={42} icon={<UserOutlined />} />
+                                        }
                                         <label className="ml-3">{user.name}</label>
                                     </div>
                                 </div>
                             </div>
                             <hr />
                             <div className="row">
-                            <div className="col-xl-12">
-                            <ul class="list-group">
-                                <li class="list-group-item">+{user.phone}</li>
-                                <li class="list-group-item"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
-                                <li class="list-group-item"><Link to="/profile">Мои объявления</Link></li>
-                                <li class="list-group-item"><Link to="/favorites">Избранные</Link></li>
-                                <li class="list-group-item"><Link to="/settings">Настройки</Link></li>
-                            </ul>
-                            </div>
+                                <div className="col-xl-12">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">+{user.phone}</li>
+                                        <li class="list-group-item"><Link to="/wallets">Пополнить</Link>: {user.balance} сом</li>
+                                        <li class="list-group-item"><Link to="/profile">Мои объявления</Link></li>
+                                        <li class="list-group-item"><Link to="/favorites">Избранные</Link></li>
+                                        <li class="list-group-item"><Link to="/settings">Настройки</Link></li>
+                                    </ul>
+                                </div>
                             </div>
                             <hr />
                         </div>
@@ -220,4 +219,5 @@ const Settings = () => {
             </div>
     );
 }
+
 export default Settings;

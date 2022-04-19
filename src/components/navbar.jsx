@@ -48,7 +48,7 @@ const Navbar = () => {
           break;
         case 'favorites':
           navigateTo('/favorites');
-          break;    
+          break;
         default:
       }
     }}>
@@ -87,7 +87,7 @@ const Navbar = () => {
                 </nav>
               </div> 
               */}
-              <div class="col-6 d-lg-flex justify-content-end align-items-center">
+              <div className="col-6 d-lg-flex justify-content-end align-items-center">
                 {token == null ?
                   <>
                     <div className="d-none d-lg-block">
@@ -125,9 +125,9 @@ const Navbar = () => {
                   </>
                   :
                   <>
-                    <div class="d-xs-block d-lg-none text-right">
+                    <div className="d-xs-block d-lg-none text-right">
                       <Button onClick={show}>
-                        <i class="fas fa-bars"></i>
+                        <i className="fas fa-bars"></i>
                       </Button>
                       <Drawer
                         title=""
@@ -136,7 +136,7 @@ const Navbar = () => {
                         onClose={hide}
                         visible={visible}
                       >
-                        <div style={{ width: "100%"}}>
+                        <div style={{ width: "100%" }}>
                           <Menu
                             defaultSelectedKeys={['1']}
                             defaultOpenKeys={['sub1']}

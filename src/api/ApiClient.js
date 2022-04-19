@@ -1,8 +1,9 @@
 import client from "../config/axios_config";
+
 class ApiClient {
     get = (url, body, contentType = 'application/json') => {
         setContentType(contentType);
-        return client.get(url, {params: {...body}});
+        return client.get(url, { params: { ...body } });
     };
     post = (url, body, contentType = 'application/json') => {
         setContentType(contentType);
@@ -24,4 +25,5 @@ class ApiClient {
 const setContentType = (contentType) => {
     client.defaults.headers['Content-Type'] = contentType;
 };
+
 export default new ApiClient();
