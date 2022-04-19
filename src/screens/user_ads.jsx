@@ -47,7 +47,8 @@ const UserAds = ({ match }) => {
                                                 <ProductItem product={item} />
                                             </div>
                                         ))
-                                        : <center>
+                                        :
+                                        <center>
                                             <LoadingOutlined />
                                         </center>
                                     }
